@@ -9,3 +9,7 @@ x.y avec
 x <--- Nombre de systemes fonctionells (0 quand seul le menu existe)
 
 y <--- Le nombre de versions depuis l'addition du dernier systeme
+
+
+
+# /!\ NE PAS OUBLIER DE COMMENTER AU MAXIMUM LE CODE / ! \  
