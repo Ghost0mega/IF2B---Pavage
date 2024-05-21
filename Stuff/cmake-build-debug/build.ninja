@@ -61,6 +61,12 @@ build CMakeFiles/Stuff.dir/Utilities.c.obj: C_COMPILER__Stuff_unscanned_Debug C$
   OBJECT_DIR = CMakeFiles\Stuff.dir
   OBJECT_FILE_DIR = CMakeFiles\Stuff.dir
 
+build CMakeFiles/Stuff.dir/Singleplayergame.c.obj: C_COMPILER__Stuff_unscanned_Debug C$:/Users/sguye/CLionProjects/IF2ProjetPavage/Stuff/Singleplayergame.c || cmake_object_order_depends_target_Stuff
+  DEP_FILE = CMakeFiles\Stuff.dir\Singleplayergame.c.obj.d
+  FLAGS = -g -std=gnu99 -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles\Stuff.dir
+  OBJECT_FILE_DIR = CMakeFiles\Stuff.dir
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target Stuff
@@ -69,7 +75,7 @@ build CMakeFiles/Stuff.dir/Utilities.c.obj: C_COMPILER__Stuff_unscanned_Debug C$
 #############################################
 # Link the executable Stuff.exe
 
-build Stuff.exe: C_EXECUTABLE_LINKER__Stuff_Debug CMakeFiles/Stuff.dir/main.c.obj CMakeFiles/Stuff.dir/Utilities.c.obj
+build Stuff.exe: C_EXECUTABLE_LINKER__Stuff_Debug CMakeFiles/Stuff.dir/main.c.obj CMakeFiles/Stuff.dir/Utilities.c.obj CMakeFiles/Stuff.dir/Singleplayergame.c.obj
   FLAGS = -g
   LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\Stuff.dir

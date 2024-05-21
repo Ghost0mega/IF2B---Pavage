@@ -7,6 +7,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <ctype.h>
 
 typedef enum {
     FALSE = 0,

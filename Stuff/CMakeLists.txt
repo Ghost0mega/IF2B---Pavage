@@ -5,4 +5,7 @@ set(CMAKE_C_STANDARD 99)
 
 add_executable(Stuff main.c
         Utilities.c
-        Utilities.h)
+        Utilities.h
+        Singleplayergame.c
+        Singleplayergame.h
+)
