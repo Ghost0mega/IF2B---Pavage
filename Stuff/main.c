@@ -46,7 +46,7 @@ void newSingleplayerGame() {
 }
 
 int main(void) {
-    printf("'Pavage' by Thomas Meyer and Amber Guyenot-cosio\n\n\n"); //test
+    printf("'Pavage' by Thomas Meyer and Amber Guyenot-cosio\nRepo : https://github.com/Ghost0mega/IF2B-Pavage\n\n"); //test
     char input[10];
     boolean exit = FALSE;
     do {
