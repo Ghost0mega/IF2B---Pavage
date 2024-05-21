@@ -8,6 +8,12 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+typedef enum {
+    FALSE = 0,
+    TRUE = 1
+} boolean;
+
+
 /**
  * Used to create and initialize a matrix having lineNumber lines and columnNumber columns of zero
  * @param lineNumber - number of lines
