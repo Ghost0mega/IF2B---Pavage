@@ -1,3 +1,6 @@
 # ninja log v5
 2	59	7379978113807170	CMakeFiles/Stuff.dir/main.c.obj	39ac3c9b0f8aa245
 68	158	7379978114749235	Stuff.exe	fee07785e0cfb8c7
+3	65	7379987638847529	CMakeFiles/Stuff.dir/main.c.obj	39ac3c9b0f8aa245
+7	69	7379987638969251	CMakeFiles/Stuff.dir/Utilities.c.obj	279c39f86c3434dc
+69	134	7379987639571572	Stuff.exe	da86cd0ab090cd5a
