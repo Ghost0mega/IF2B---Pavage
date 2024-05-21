@@ -13,3 +13,4 @@ y <--- Le nombre de versions depuis l'addition du dernier systeme
 
 
 # /!\ NE PAS OUBLIER DE COMMENTER AU MAXIMUM LE CODE / ! \  
+PS: pour clion le projet a load c IF2B-Pavage/Stuff
