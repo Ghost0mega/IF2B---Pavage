@@ -1,0 +1,3 @@
+C:/Users/sguye/CLionProjects/IF2ProjetPavage/Stuff/cmake-build-debug/CMakeFiles/Stuff.dir
+C:/Users/sguye/CLionProjects/IF2ProjetPavage/Stuff/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/sguye/CLionProjects/IF2ProjetPavage/Stuff/cmake-build-debug/CMakeFiles/rebuild_cache.dir
