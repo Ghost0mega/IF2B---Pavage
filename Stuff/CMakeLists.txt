@@ -3,4 +3,6 @@ project(Stuff C)
 
 set(CMAKE_C_STANDARD 99)
 
-add_executable(Stuff main.c)
+add_executable(Stuff main.c
+        Utilities.c
+        Utilities.h)
