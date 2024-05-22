@@ -1,11 +1,22 @@
 //
 // Created by Amber GUYENOT-COSIO on 21/05/2024.
 //
+#ifndef STUFF_SINGLEPLAYERGAME_H
+#define STUFF_SINGLEPLAYERGAME_H
 
 #include "Utilities.h"
 
-#ifndef STUFF_SINGLEPLAYERGAME_H
-#define STUFF_SINGLEPLAYERGAME_H
+
+struct MultiplayerGame {
+    boolean isHardDifficulty;
+    int x;
+    int y;
+    char** field;       //rows = x, columns = y
+    char hand[5][3][3];
+    int score1;
+};
+
+
 
 /**
  * Creates a new single player game

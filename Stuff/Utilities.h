@@ -1,4 +1,3 @@
-//
 // Original code made by Nicolas GAUD during a lecture
 // Edited by Amber GUYENOT-COSIO
 
@@ -24,12 +23,30 @@ typedef enum {
 char** createAndInitializeMatrix (int lineNumber, int columnNumber);
 
 /**
+ * Check if the space is available inside an array.
+ * @param tab the array to check in
+ * @param x
+ * @param y
+ * @return TRUE if the space is available '0', FALSE if theres already something else
+ */
+boolean checkIfSpaceAvailable (char** tab, int x, int y);
+
+/**
+ * will use rng to make a new tile inside the given matrix
+ * @param tile the tile to be initialized
+ * @param isHardDifficulty if false 1 letter and 1-3 numbers ,if true 2 letters and 2-4 numbers
+ * @param isMultiplayer
+ * @param isPlayer1 relevant only in multiplayer changes polarity of numbers and letters
+ */
+void initializeTile (char* tile[3][3], boolean isHardDifficulty, boolean isMultiplayer, boolean isPlayer1);
+
+/**
  * Print the content of the specified matrix
  * @paramlineNumber - number of lines
  * @paramcolumnNumber - number of columns
  * @param matrix - the matrix [lineNumber X columnNumber] to print
  */
-void printMatrix (int lineNumber, int columnNumber, char** matrix);
+void printLevel (int lineNumber, int columnNumber, char** matrix);
 
 /**
  * Free the the content of the specified matrix

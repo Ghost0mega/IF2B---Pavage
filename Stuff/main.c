@@ -19,16 +19,16 @@ void newGame(boolean isMultiplayer) {
         fflush(stdin);
         scanf("%s", input);
         rows = atoi(input);
-        if (rows == 0) { fprintf(stderr, "ERROR: Invalid input please use a decimal number\n"); }
-    } while (rows == 0);
+        if (rows < 3) { fprintf(stderr, "ERROR: Invalid input please use a decimal number over 3\n"); }
+    } while (rows < 3);
 
     printf("Please input the number of columns you wish to have in your game.\n");
     do {
         fflush(stdin);
         scanf("%s", input);
         columns = atoi(input);
-        if (columns == 0) { fprintf(stderr, "ERROR: Invalid input please use a decimal number\n"); }
-    } while (columns == 0);
+        if (columns < 6) { fprintf(stderr, "ERROR: Invalid input please use a decimal number over 6\n"); }
+    } while (columns < 6);
 
     printf("Do you wish to play the game in hard mode ( y / n ) ?\n");
     do {
