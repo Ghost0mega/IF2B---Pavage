@@ -77,7 +77,7 @@ int main(void) {
                 scanf("%s", input);
                 switch (input[0]) {
                     default:
-                        fprintf(stderr, "ERROR: Invalid input please use the index of an existing option\n");
+                        fprintf(stderr, "ERROR: Invalid input please use 'y' for yes and 'n, for no.\n");
                         goto newgamemenu;
                     case '1':
                         newGame(FALSE);
