@@ -8,4 +8,6 @@ add_executable(Stuff main.c
         Utilities.h
         Singleplayergame.c
         Singleplayergame.h
+        MultiplayerGame.c
+        MultiplayerGame.h
 )

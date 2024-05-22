@@ -1,8 +1,13 @@
 #include <stdio.h>
 #include "Utilities.h"
 #include "Singleplayergame.h"
+#include "MultiplayerGame.h"
 
-void newSingleplayerGame() {
+/**
+ * Asks the user what parameters they want for the start of their game and calls the appropriate function
+ * @param type if type = 1 single player game | if type = 2 multiplayer game
+ */
+void newGame(boolean isMultiplayer) {
     int rows = 0;
     int columns = 0;
     boolean hardMode = FALSE;
@@ -42,7 +47,11 @@ void newSingleplayerGame() {
                 letsGo = TRUE;
         }
     } while (!letsGo);
-    loadNewSingleplayerGame(rows, columns, hardMode);
+    if (isMultiplayer) {
+        loadNewMultiplayerGame(rows, columns, hardMode);
+    } else {
+        loadNewSingleplayerGame(rows, columns, hardMode);
+    }
 }
 
 int main(void) {
@@ -71,14 +80,15 @@ int main(void) {
                         fprintf(stderr, "ERROR: Invalid input please use the index of an existing option\n");
                         goto newgamemenu;
                     case '1':
-                        newSingleplayerGame();
+                        newGame(FALSE);
                         printf("Returning to main menu.\n\n");
                         goto mainmenu;
                     case '2':
-                        fprintf(stderr, "Not implemented yet\n");
-                        goto newgamemenu;
+                        newGame(TRUE);
+                        printf("Returning to main menu.\n\n");
+                        goto mainmenu;
                     case '3':
-                        printf("Going back to main menu\n\n");
+                        printf("Returning to main menu.\n\n");
                         goto mainmenu;
                 }
 
