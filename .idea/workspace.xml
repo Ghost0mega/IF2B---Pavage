@@ -20,15 +20,7 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="48911f90-1c90-40bd-b19f-a898c17b8bea" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Stuff/MultiplayerGame.h" beforeDir="false" afterPath="$PROJECT_DIR$/Stuff/MultiplayerGame.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Stuff/Singleplayergame.h" beforeDir="false" afterPath="$PROJECT_DIR$/Stuff/Singleplayergame.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Stuff/Utilities.c" beforeDir="false" afterPath="$PROJECT_DIR$/Stuff/Utilities.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Stuff/Utilities.h" beforeDir="false" afterPath="$PROJECT_DIR$/Stuff/Utilities.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Stuff/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/Stuff/main.c" afterDir="false" />
-    </list>
+    <list default="true" id="48911f90-1c90-40bd-b19f-a898c17b8bea" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
