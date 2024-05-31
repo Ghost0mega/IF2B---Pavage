@@ -8,5 +8,5 @@
  * @param hardDifficulty is hard difficulty enabled
  */
 void loadNewMultiplayerGame(int rows, int columns, boolean hardDifficulty) {
-    printf("Multiplayer | Rows : %d | Columns : %d | HardDifficulty : %d\n", rows, columns, hardDifficulty);
+    printf("Multiplayer | Rows : %d | Columns : %d | HardDifficulty : %s\n", rows, columns, hardDifficulty ? "true" : "false");
 }

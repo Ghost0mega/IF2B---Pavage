@@ -7,13 +7,13 @@
 #include "Utilities.h"
 
 
-struct MultiplayerGame {
+struct SingleplayerGame {
     boolean isHardDifficulty;
     int x;
     int y;
     char** field;       //rows = x, columns = y
-    char hand[5][3][3];
-    int score1;
+    char** hand[5];
+    int score;
 };
 
 

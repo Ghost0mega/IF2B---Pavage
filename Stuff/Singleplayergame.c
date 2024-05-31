@@ -11,5 +11,5 @@
  * @param hardDifficulty is hard difficulty enabled
  */
 void loadNewSingleplayerGame(int rows, int columns, boolean hardDifficulty) {
-    printf("Singleplayer | Rows : %d | Columns : %d | HardDifficulty : %d\n", rows, columns, hardDifficulty);
+    printf("Singleplayer | Rows : %d | Columns : %d | HardDifficulty : %s\n", rows, columns, hardDifficulty ? "true" : "false");
 }

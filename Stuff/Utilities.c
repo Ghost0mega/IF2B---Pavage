@@ -46,7 +46,7 @@ void initializeTile (char* tile[3][3], boolean isHardDifficulty, boolean isMulti
             (*tile)[i][j] = '0';
         }
     }
-    int howManySpacesToFill = isHardDifficulty ? rand() % 2 + 2/*2 a 4*/ /*+ 2lettres*/ : rand() % 2 + 1/*1 a 3*/ /*+ 1lettres*/;        //Faire recherches sur operateurs ternaires
+    int howManySpacesToFill = isHardDifficulty ? rand() % 2 + 2 /*2 a 4 + 2lettres*/ : rand() % 2 + 1/*1 a 3*/ /*+ 1lettres*/;        //Faire recherches sur operateurs ternaires
     int pos[2];
     for (int i = 0; i < (isHardDifficulty ? 2 : 1); i++) {
         pos[0] = rand()%3;

@@ -20,7 +20,15 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="48911f90-1c90-40bd-b19f-a898c17b8bea" name="Changes" comment="" />
+    <list default="true" id="48911f90-1c90-40bd-b19f-a898c17b8bea" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Stuff/MultiplayerGame.c" beforeDir="false" afterPath="$PROJECT_DIR$/Stuff/MultiplayerGame.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Stuff/Singleplayergame.c" beforeDir="false" afterPath="$PROJECT_DIR$/Stuff/Singleplayergame.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Stuff/Singleplayergame.h" beforeDir="false" afterPath="$PROJECT_DIR$/Stuff/Singleplayergame.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Stuff/Utilities.c" beforeDir="false" afterPath="$PROJECT_DIR$/Stuff/Utilities.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Stuff/cmake-build-debug/Stuff.exe" beforeDir="false" afterPath="$PROJECT_DIR$/Stuff/cmake-build-debug/Stuff.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Stuff/cmake-build-debug/Testing/Temporary/LastTest.log" beforeDir="false" afterPath="$PROJECT_DIR$/Stuff/cmake-build-debug/Testing/Temporary/LastTest.log" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -83,6 +91,7 @@
       <workItem from="1716970713997" duration="93000" />
       <workItem from="1717101576156" duration="675000" />
       <workItem from="1717156889645" duration="144000" />
+      <workItem from="1717157080944" duration="798000" />
     </task>
     <servers />
   </component>
