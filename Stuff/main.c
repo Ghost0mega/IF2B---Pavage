@@ -55,7 +55,7 @@ void newGame(boolean isMultiplayer) {
 }
 
 int main(void) {
-    printf("'Pavage' by Thomas Meyer and Amber Guyenot-cosio\nRepo : https://github.com/Ghost0mega/IF2B-Pavage\n\n"); //test
+    printf("'Pavage' by Thomas Meyer, Elven Bosc--Charles and Amber Guyenot-cosio\nRepo : https://github.com/Ghost0mega/IF2B-Pavage\n\n"); //test
     char input[10];
     boolean exit = FALSE;
     do {
