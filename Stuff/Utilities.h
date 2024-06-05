@@ -7,6 +7,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <ctype.h>
+#include <time.h>
+#include <string.h>
 
 typedef enum {
     FALSE = 0,
@@ -29,7 +31,7 @@ char** createAndInitializeMatrix (int lineNumber, int columnNumber);
  * @param y
  * @return TRUE if the space is available '0', FALSE if theres already something else
  */
-boolean checkIfSpaceIsEmpty (const char* tab, int x, int y);
+boolean checkIfSpaceIsEmpty (char** tab, int x, int y);
 
 /**
  * will use rng to make a new tile inside the given matrix
@@ -38,7 +40,14 @@ boolean checkIfSpaceIsEmpty (const char* tab, int x, int y);
  * @param isMultiplayer
  * @param isPlayer1 relevant only in multiplayer changes polarity of numbers and letters
  */
-void initializeTile (char* tile[3][3], boolean isHardDifficulty, boolean isMultiplayer, boolean isPlayer1);
+void initializeTile (char*** tile, boolean isHardDifficulty, boolean isMultiplayer, boolean isPlayer1);
+
+/**
+ * will return the correct input to show the player
+ * @param n
+ * @return what is to be shown
+ */
+char* interpretChar (char n);
 
 /**
  * Print the content of the specified matrix

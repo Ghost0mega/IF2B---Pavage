@@ -40,8 +40,8 @@ char** createAndInitializeMatrix (int lineNumber, int columnNumber) {
  * @param y
  * @return TRUE if the space is available '0', FALSE if theres already something else
  */
-boolean checkIfSpaceIsEmpty (const char* tab, int x, int y) {
-    if (tab == '0') {
+boolean checkIfSpaceIsEmpty (char** tab, int x, int y) {
+    if (tab[x][y] == '3') {
         return TRUE;
     }
     return FALSE;
@@ -55,19 +55,73 @@ boolean checkIfSpaceIsEmpty (const char* tab, int x, int y) {
  * @param isMultiplayer
  * @param isPlayer1 relevant only in multiplayer changes polarity of numbers and letters
  */
-void initializeTile (char* tile[3][3], boolean isHardDifficulty, boolean isMultiplayer, boolean isPlayer1) {
+void initializeTile (char*** tile, boolean isHardDifficulty, boolean isMultiplayer, boolean isPlayer1) {
     for (int i = 0; i < 3; i++) {            //emptying everything
         for (int j = 0; j < 3; j++) {
-            (*tile)[i][j] = '0';
+            (*tile)[i][j] = '3';
         }
     }
     int howManyNumbers = isHardDifficulty ? rand() % 2 + 2 /*2 a 4 + 2lettres*/ : rand() % 2 + 1/*1 a 3*/ /*+ 1lettres*/;        //Faire recherches sur operateurs ternaires
-    int pos[2];
+    int x, y;
+    boolean placed = FALSE;
     for (int i = 0; i < (isHardDifficulty ? 2 : 1); i++) {
-        pos[0] = rand()%3;
-        pos[1] = rand()%3;
-        if (checkIfSpaceIsEmpty(tile, pos[0],))
+        do {
+            x = rand() % 3;
+            y = rand() % 3;
+            if (checkIfSpaceIsEmpty(*tile, x, y)) {
+                placed = TRUE;
+                if (isMultiplayer) {
+                    (*tile)[x][y] = isPlayer1 ? (char)(rand() % 2 + 65) : (char)(rand() % 2 + 88);
+                } else {
+                    (*tile)[x][y] = (char) (rand() % 26 + 65);
+                }
+            }
+        } while (!placed);
+        placed = FALSE;
     }
+    for (int j = 0; j < howManyNumbers; j++) {
+        do {
+            x = rand() % 3;
+            y = rand() % 3;
+            if (checkIfSpaceIsEmpty(*tile, x, y)) {
+                placed = TRUE;
+                (*tile)[x][y] = !isPlayer1 ? (char)(rand() % 2 + 49) : (char)(rand() % 2 + 52);
+            }
+        } while (!placed);
+        placed = FALSE;
+    }
+}
+
+char* interpretChar (char n) {
+    char *output = (char *) malloc(sizeof(char) * 2);
+    output[1] = '\0';
+    switch (n) {
+        default:
+            output[0] = n;
+            break;
+        case '0':
+            strcpy(output, "-3");
+            break;
+        case '1':
+            strcpy(output, "-2");
+            break;
+        case '2':
+            strcpy(output, "-1");
+            break;
+        case '3':
+            output[0] = '0';
+            break;
+        case '4':
+            output[0] = '1';
+            break;
+        case '5':
+            output[0] = '2';
+            break;
+        case '6':
+            output[0] = '3';
+            break;
+    }
+    return output;
 }
 
 /**
@@ -79,18 +133,20 @@ void initializeTile (char* tile[3][3], boolean isHardDifficulty, boolean isMulti
 void printLevel (int lineNumber, int columnNumber, char** matrix) {
     int l;
     int c;
-
-    printf("\n ------------------ Current board ------------------ \n\n");
+    printf("\n ------------------ Current board ------------------ \n");
 
     for(l=0; l<lineNumber; l++) {
         printf("\t[");
-        for (c=0; c<columnNumber; c++) {
-            printf("%c ", matrix[l][c]);
+        for (c=0; c<columnNumber-1; c++) {
+            char * content = interpretChar(matrix[l][c]);
+            printf("%s, ", content);
+            free(content);
         }
-        printf("] \n");
+        char* content = interpretChar(matrix[l][c]);
+        printf("%s] \n",content);
+        free(content);
     }
-
-    printf("\n --------------------------------------------------- \n");
+    printf(" --------------------------------------------------- \n");
 }
 
 

@@ -56,15 +56,16 @@ void newGame(boolean isMultiplayer) {
 }
 
 int main(int argc, char** argv) {
-#if testMode
-
-#else
     printf("'Pavage' by Thomas Meyer, Elven Bosc--Charles and Amber Guyenot-cosio\nRepo : https://github.com/Ghost0mega/IF2B-Pavage\n\n"); //test
-    if (argc > 0) {
-        printf("Launched in Testmode\n");
-        testMode();
+#if testMode
+    srand(time(0));
+    int iterations = 5;
+    for (int i = 0; i < iterations; i++) {
+        char **handtest = createAndInitializeMatrix(3, 3);
+        initializeTile(&handtest, TRUE, TRUE, TRUE);
+        printLevel(3, 3, handtest);
     }
-
+#else
     char input[10];
     boolean exit = FALSE;
     do {
