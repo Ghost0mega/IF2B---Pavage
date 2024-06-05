@@ -2,6 +2,7 @@
 #include "Utilities.h"
 #include "Singleplayergame.h"
 #include "MultiplayerGame.h"
+#define testMode 1
 
 /**
  * Asks the user what parameters they want for the start of their game and calls the appropriate function
@@ -54,8 +55,16 @@ void newGame(boolean isMultiplayer) {
     }
 }
 
-int main(void) {
+int main(int argc, char** argv) {
+#if testMode
+
+#else
     printf("'Pavage' by Thomas Meyer, Elven Bosc--Charles and Amber Guyenot-cosio\nRepo : https://github.com/Ghost0mega/IF2B-Pavage\n\n"); //test
+    if (argc > 0) {
+        printf("Launched in Testmode\n");
+        testMode();
+    }
+
     char input[10];
     boolean exit = FALSE;
     do {
@@ -101,5 +110,6 @@ int main(void) {
                 exit = TRUE;
         }
     } while (!exit);
+#endif
     return EXIT_SUCCESS;
 }

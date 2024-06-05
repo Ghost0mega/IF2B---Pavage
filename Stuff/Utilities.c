@@ -34,6 +34,21 @@ char** createAndInitializeMatrix (int lineNumber, int columnNumber) {
 
 
 /**
+ * Check if the space is available inside an array.
+ * @param tab the array to check in
+ * @param x
+ * @param y
+ * @return TRUE if the space is available '0', FALSE if theres already something else
+ */
+boolean checkIfSpaceIsEmpty (const char* tab, int x, int y) {
+    if (tab == '0') {
+        return TRUE;
+    }
+    return FALSE;
+}
+
+
+/**
  * will use rng to make a new tile inside the given matrix
  * @param tile the tile to be initialized
  * @param isHardDifficulty if false 1 letter and 1-3 numbers ,if true 2 letters and 2-4 numbers
@@ -46,10 +61,12 @@ void initializeTile (char* tile[3][3], boolean isHardDifficulty, boolean isMulti
             (*tile)[i][j] = '0';
         }
     }
-    int howManySpacesToFill = isHardDifficulty ? rand() % 2 + 2 /*2 a 4 + 2lettres*/ : rand() % 2 + 1/*1 a 3*/ /*+ 1lettres*/;        //Faire recherches sur operateurs ternaires
+    int howManyNumbers = isHardDifficulty ? rand() % 2 + 2 /*2 a 4 + 2lettres*/ : rand() % 2 + 1/*1 a 3*/ /*+ 1lettres*/;        //Faire recherches sur operateurs ternaires
     int pos[2];
     for (int i = 0; i < (isHardDifficulty ? 2 : 1); i++) {
         pos[0] = rand()%3;
+        pos[1] = rand()%3;
+        if (checkIfSpaceIsEmpty(tile, pos[0],))
     }
 }
 

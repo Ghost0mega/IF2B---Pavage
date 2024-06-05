@@ -29,7 +29,7 @@ char** createAndInitializeMatrix (int lineNumber, int columnNumber);
  * @param y
  * @return TRUE if the space is available '0', FALSE if theres already something else
  */
-boolean checkIfSpaceAvailable (char** tab, int x, int y);
+boolean checkIfSpaceIsEmpty (const char* tab, int x, int y);
 
 /**
  * will use rng to make a new tile inside the given matrix
