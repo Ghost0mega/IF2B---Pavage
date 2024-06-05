@@ -2,10 +2,9 @@
 Projet pour l'UV IF2B de P2024, Fait par Thomas Meyer et Amber Guyenot-Cosio du groupe U
 
 
-## / ! \ NE PAS OUBLIER DE COMMENTER AU MAXIMUM LE CODE / ! \  
+## / ! \ IMPORTANT / ! \  
 obliez pas de mettre votre fichier cmakebuilddebug dasn le gitignore
-PS: pour clion le projet a load c'est IF2B-Pavage/Stuff
 
+Pour tester les fonctions utilizez le bloc bloc testmode (1 pour en test 0 pour fonctionement normal) dans le main et ecrivez vos tests entre **#if testmode** et **#else**
 
-
-test test test
+Le projet est dans **/stuff**
