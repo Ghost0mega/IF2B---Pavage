@@ -3,7 +3,7 @@ Projet pour l'UV IF2B de P2024, Fait par Thomas Meyer et Amber Guyenot-Cosio du 
 
 
 ## / ! \ IMPORTANT / ! \  
-obliez pas de mettre votre fichier cmakebuilddebug dasn le gitignore
+obliez pas de mettre votre fichier **cmakebuilddebug** et **.idea** dasn le gitignore
 
 Pour tester les fonctions utilizez le bloc bloc testmode (1 pour en test 0 pour fonctionement normal) dans le main et ecrivez vos tests entre **#if testmode** et **#else**
 
