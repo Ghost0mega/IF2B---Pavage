@@ -82,12 +82,12 @@ int main(int argc, char** argv) {
     char input[10];
     boolean exit = FALSE;
     boolean proceed = FALSE;
-    boolean skip;
+    boolean skip; //Could be deleted but i dont wanna spend 20 mins switching if statements around
     int menuPos = 0;
     do {
         skip = FALSE;
         switch (menuPos) {
-            default:
+            default:        //should stay inaccessible
                 fprintf(stderr, "ERROR: menuPos %d is not a valid value! resetting menuPos to 0\n", menuPos);
                 menuPos = 0;
                 break;
