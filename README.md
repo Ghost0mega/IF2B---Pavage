@@ -1,11 +1,11 @@
 # IF2B-Pavage
-Projet pour l'UV IF2B de P2024, Fait par Thomas Meyer et Amber Guyenot-Cosio du groupe U
+Projet pour l'UV IF2B de P2024, Fait par Thomas Meyer, Amber Guyenot-Cosio et Elven Bosc--Charlès du groupe U
 
 
 ## / ! \ IMPORTANT / ! \  
-obliez pas de mettre votre fichier **cmakebuilddebug** et **.idea** dasn le gitignore
+Oubliez pas de mettre votre fichier **cmakebuilddebug** et **.idea** dans le gitignore
 
-Pour tester les fonctions utilizez le bloc bloc testmode (1 pour en test 0 pour fonctionement normal) dans le main et ecrivez vos tests entre **#if testmode** et **#else**
+Pour tester les fonctions utilisez le bloc testmode (1 pour test 0 pour fonctionement normal) dans le main et ecrivez vos tests entre **#if testmode** et **#else**
 
 Interpretation des nombres dans les cases:
 
