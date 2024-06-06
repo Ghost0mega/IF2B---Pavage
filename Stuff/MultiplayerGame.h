@@ -4,8 +4,8 @@
 
 struct MultiplayerGame {
     boolean isHardDifficulty;
-    int x;
-    int y;
+    int sizeX;
+    int sizeY;
     char** field;           //rows = x, columns = y
     char** handPlayer1[5];
     char** handPlayer2[5];
@@ -16,9 +16,9 @@ struct MultiplayerGame {
 
 /**
  * Creates a new multiplayer game
- * @param rows number of rows in the grid
- * @param columns number of columns in the grid
+ * @param sizeX number of columns in the grid
+ * @param sizeY number of rows in the gridd
  * @param hardDifficulty is hard difficulty enabled
  */
-void loadNewMultiplayerGame(int rows, int columns, boolean hardDifficulty);
+void newMultiplayerGame(int sizeX, int sizeY, boolean hardDifficulty);
 #endif //STUFF_MULTIPLAYERGAME_H

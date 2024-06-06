@@ -2,35 +2,18 @@
 #include "Utilities.h"
 #include "Singleplayergame.h"
 #include "MultiplayerGame.h"
-#define testMode 1
+#define testMode 0
 
 /**
  * Asks the user what parameters they want for the start of their game and calls the appropriate function
  * @param type if type = 1 single player game | if type = 2 multiplayer game
  */
 void newGame(boolean isMultiplayer) {
-    int rows = 0;
-    int columns = 0;
-    boolean hardMode = FALSE;
-    boolean letsGo = FALSE;
+    boolean isHardDifficulty = FALSE;
+    int sizeX = 0;
+    int sizeY = 0;
+    boolean proceed = FALSE;
     char input[10];
-
-    printf("Please input the number of rows you wish to have in your game.\n");
-    do {
-        fflush(stdin);
-        scanf("%s", input);
-        rows = atoi(input);
-        if (rows < 3) { fprintf(stderr, "ERROR: Invalid input please use a decimal number over 3\n"); }
-    } while (rows < 3);
-
-    printf("Please input the number of columns you wish to have in your game.\n");
-    do {
-        fflush(stdin);
-        scanf("%s", input);
-        columns = atoi(input);
-        if (columns < 6) { fprintf(stderr, "ERROR: Invalid input please use a decimal number over 6\n"); }
-    } while (columns < 6);
-
     printf("Do you wish to play the game in hard mode ( y / n ) ?\n");
     do {
         fflush(stdin);
@@ -38,26 +21,55 @@ void newGame(boolean isMultiplayer) {
         input[0] = toupper(input[0]);
         switch (input[0]) {
             default:
-                fprintf(stderr, "ERROR: Invalid input please use a decimal number\n");
+                fprintf(stderr, "ERROR: Invalid input please use 'y' for yes and 'n' for no\n");
                 break;
             case 'Y':
-                hardMode = TRUE;
-                letsGo = TRUE;
+                printf("Game set to hard mode.\n");
+                isHardDifficulty = TRUE;
+                proceed = TRUE;
                 break;
             case 'N':
-                letsGo = TRUE;
+                printf("Game set to normal mode.\n");
+                proceed = TRUE;
+                break;
         }
-    } while (!letsGo);
+    } while (!proceed);
+    proceed = FALSE;
+    printf("How wide do you wish the level to be ( min 6 ) ?\n");
+    do{
+        fflush(stdin);
+        scanf("%s", input);
+        sizeX = atoi(input);        //atoi works bc we always want a value above 3 anyway
+        if (sizeX < 6) {
+            fprintf(stderr, "ERROR: Invalid input please use a decimal number over 6\n");
+        } else {
+            proceed = TRUE;
+        }
+    } while (!proceed);
+    proceed = FALSE;
+    printf("How tall do you wish the level to be ( min 3 ) ?\n");
+    do{
+        fflush(stdin);
+        scanf("%s", input);
+        sizeY = atoi(input);        //atoi works bc we always want a value above 3 anyway
+        if (sizeY < 3) {
+            fprintf(stderr, "ERROR: Invalid input please use a decimal number over 3\n");
+        } else {
+            proceed = TRUE;
+        }
+    } while (!proceed);
+
     if (isMultiplayer) {
-        loadNewMultiplayerGame(rows, columns, hardMode);
+        newMultiplayerGame(sizeX, sizeY, isHardDifficulty);
     } else {
-        loadNewSingleplayerGame(rows, columns, hardMode);
+        newSingleplayerGame(sizeX, sizeY, isHardDifficulty);
     }
 }
 
 int main(int argc, char** argv) {
     printf("'Pavage' by Thomas Meyer, Elven Bosc--Charles and Amber Guyenot-cosio\nRepo : https://github.com/Ghost0mega/IF2B-Pavage\n\n"); //test
 #if testMode
+//tile initialization test
     srand(time(0));
     int iterations = 5;
     for (int i = 0; i < iterations; i++) {
@@ -65,50 +77,101 @@ int main(int argc, char** argv) {
         initializeTile(&handtest, TRUE, TRUE, TRUE);
         printLevel(3, 3, handtest);
     }
+
 #else
     char input[10];
     boolean exit = FALSE;
+    boolean proceed = FALSE;
+    boolean skip;
+    int menuPos = 0;
     do {
-        mainmenu:
-        printf("MAIN MENU :\n 1 - start new game\n 2 - load game\n 3 - quit\n\nTip : input the index of each option in the console to navigate through them and type 'help' if you are in a pickle\n");
-        mainmenu1:
-        fflush(stdin);
-        scanf("%s", input);
-
-        switch (input[0]) {
+        skip = FALSE;
+        switch (menuPos) {
             default:
-                fprintf(stderr, "ERROR: Invalid input please use the index of an existing option\n");
-                goto mainmenu1;
+                fprintf(stderr, "ERROR: menuPos %d is not a valid value! resetting menuPos to 0\n", menuPos);
+                menuPos = 0;
+                break;
+            case 0:
+                printf("MAIN MENU :\n 1 - start new game\n 2 - load game\n 3 - quit\n");
+                break;
+            case 1:
+                printf("NEW GAME :\n 1 - Single-player\n 2 - Duo match\n 3 - Back\n");
+                break;
+            case 11:
+                printf("CREATING NEW SINGLE-PLAYER MATCH :\n");
+                break;
+            case 12:
+                printf("CREATING NEW DUO MATCH :\n");
+                break;
+        }
 
-            case '1':
-                printf("NEW GAME :\n 1 - Singleplayer\n 2 - Duo match\n 3 - Back\n");
-            newgamemenu:
+        if (menuPos == 0) {     //MAIN MENU
+            proceed = FALSE;
+            do {
                 fflush(stdin);
                 scanf("%s", input);
                 switch (input[0]) {
                     default:
-                        fprintf(stderr, "ERROR: Invalid input please use 'y' for yes and 'n, for no.\n");
-                        goto newgamemenu;
-                    case '1':
-                        newGame(FALSE);
-                        printf("Returning to main menu.\n\n");
-                        goto mainmenu;
-                    case '2':
-                        newGame(TRUE);
-                        printf("Returning to main menu.\n\n");
-                        goto mainmenu;
-                    case '3':
-                        printf("Returning to main menu.\n\n");
-                        goto mainmenu;
+                        fprintf(stderr, "ERROR: Invalid input please use the index of an existing option\n");
+                        break;
+                    case '1':     //NEW GAME
+                        menuPos = 1;
+                        skip = TRUE;
+                        proceed = TRUE;
+                        break;
+                    case '2':     //LOAD GAME
+                        fprintf(stderr, "Not implemented yet\n");
+                        menuPos = 0;
+                        skip = TRUE;
+                        proceed = FALSE;
+                        //menuPos = 2;
+                        //proceed = TRUE;
+                        break;
+                    case '3':     //QUIT
+                        printf("Goodbye.");
+                        proceed = TRUE;
+                        exit = TRUE;
                 }
+            } while (!proceed);
+        }
 
-            case '2':
-                fprintf(stderr, "Not implemented yet\n");
-                goto mainmenu1;
+        if (menuPos == 1 && !skip) {     //NEW GAME
+            proceed = FALSE;
+            do {
+                fflush(stdin);
+                scanf("%s", input);
+                switch (input[0]) {
+                    default:
+                        fprintf(stderr, "ERROR: Invalid input please use the index of an existing option\n");
+                        break;
+                    case '1':     //SINGLEPLAYER
+                        menuPos = 11;
+                        skip = TRUE;
+                        proceed = TRUE;
+                        break;
+                    case '2':     //MULTIPLAYER
+                        menuPos = 12;
+                        skip = TRUE;
+                        proceed = TRUE;
+                        break;
+                    case '3':     //RETURN TO MAIN MENU
+                        printf("Returning to main menu.\n\n");
+                        menuPos = 0;
+                        proceed = TRUE;
+                }
+            } while (!proceed);
+        }
 
-            case '3':
-                printf("Goodbye.");
-                exit = TRUE;
+        if (menuPos == 11 && !skip) {     //CREATING NEW SINGLE-PLAYER GAME
+            newGame(FALSE);
+            printf("Returning to main menu.\n\n");
+            menuPos = 0;
+        }
+
+        if (menuPos == 12 && !skip) {    //CREATING NEW MULTI-PLAYER GAME
+            newGame(TRUE);
+            printf("Returning to main menu.\n\n");
+            menuPos = 0;
         }
     } while (!exit);
 #endif

@@ -9,8 +9,8 @@
 
 struct SingleplayerGame {
     boolean isHardDifficulty;
-    int x;
-    int y;
+    int sizeX;
+    int sizeY;
     char** field;       //rows = x, columns = y
     char** hand[5];
     int score;
@@ -20,10 +20,10 @@ struct SingleplayerGame {
 
 /**
  * Creates a new single player game
- * @param rows number of rows in the grid
- * @param columns number of columns in the grid
+ * @param sizeX number of columns in the grid
+ * @param sizeX number of rows in the grid
  * @param hardDifficulty is hard difficulty enabled
  */
-void loadNewSingleplayerGame(int rows, int columns, boolean hardDifficulty);
+void newSingleplayerGame(int sizeX, int sizeY, boolean hardDifficulty);
 
 #endif //STUFF_SINGLEPLAYERGAME_H
