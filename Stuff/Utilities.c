@@ -19,7 +19,7 @@ char** createAndInitializeMatrix (int sizeX, int sizeY) {
             matrix[x] = (char*) malloc(sizeY * sizeof (char));
             if (matrix[x] != NULL) {/* Be sure that the memory allocation was effectively successful */
                 for (y=0; y<sizeY ; y++) {
-                    matrix[x][y]='0';
+                    matrix[x][y]='3';
                 }
             } else {
                 fprintf(stderr, "ERROR: Error during the initialization of the %d line of the matrix. You probably requested a over the bit limit of %d\n", x, INT_MAX);
@@ -135,9 +135,9 @@ void printLevel (int sizeX, int sizeY, char** matrix) {
     int y;
     printf("\n ------------------ Current board ------------------ \n");
 
-    for(x=0; x<sizeX; x++) {
+    for(y=0; y<sizeY; y++) {
         printf("\t[");
-        for (y=0; y<sizeY-1; y++) {
+        for (x=0; x<sizeX-1; x++) {
             char* content = interpretChar(matrix[x][y]);
             printf("%s, ", content);
             free(content);
