@@ -18,11 +18,11 @@ typedef enum {
 
 /**
  * Used to create and initialize a matrix having lineNumber lines and columnNumber columns of zero
- * @param lineNumber - number of lines
- * @param columnNumber - number of columns
+ * @param sizeX - number of columns
+ * @param sizeY - number of lines
  * @return the newly initialized matrix
  */
-char** createAndInitializeMatrix (int lineNumber, int columnNumber);
+char** createAndInitializeMatrix (int sizeX, int sizeY);
 
 /**
  * Check if the space is available inside an array.
@@ -51,17 +51,17 @@ char* interpretChar (char n);
 
 /**
  * Print the content of the specified matrix
- * @paramlineNumber - number of lines
- * @paramcolumnNumber - number of columns
+ * @param sizeX - number of columns
+ * @param sizeY - number of lines
  * @param matrix - the matrix [lineNumber X columnNumber] to print
  */
-void printLevel (int lineNumber, int columnNumber, char** matrix);
+void printLevel (int sizeX, int sizeY, char** matrix);
 
 /**
  * Free the the content of the specified matrix
- * @paramlineNumber - number of lines
+ * @param sizeX - number of columns
  * @param matrix - the matrix to free, it will be modified by this function (by address parameter passing)
  */
-void freeMatrix (int lineNumber, char*** matrix);
+void freeMatrix (int sizeX, char*** matrix);
 
 #endif //STUFF_UTILITIES_H

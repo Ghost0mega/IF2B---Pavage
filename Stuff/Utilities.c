@@ -6,23 +6,23 @@
 
 /**
  * Used to create and initialize a matrix having lineNumber lines and columnNumber columns of zero
- * @param lineNumber - number of lines
- * @param columnNumber - number of columns
+ * @param sizeX - number of columns
+ * @param sizeY - number of lines
  * @return the newly initialized matrix
  */
-char** createAndInitializeMatrix (int lineNumber, int columnNumber) {
-    int l,c;
+char** createAndInitializeMatrix (int sizeX, int sizeY) {
+    int x,y;
 
-    char** matrix = (char**) malloc(lineNumber * sizeof(char*));
+    char** matrix = (char**) malloc(sizeX * sizeof(char*));
     if (matrix != NULL) {/* Be sure that the memory allocation was effectively successful */
-        for (l=0; l<lineNumber; l++) {
-            matrix[l] = (char*) malloc(columnNumber * sizeof (char));
-            if (matrix[l] != NULL) {/* Be sure that the memory allocation was effectively successful */
-                for (c=0; c<columnNumber ; c++) {
-                    matrix[l][c]='0';
+        for (x=0; x<sizeX; x++) {
+            matrix[x] = (char*) malloc(sizeY * sizeof (char));
+            if (matrix[x] != NULL) {/* Be sure that the memory allocation was effectively successful */
+                for (y=0; y<sizeY ; y++) {
+                    matrix[x][y]='0';
                 }
             } else {
-                fprintf(stderr, "ERROR: Error during the initialization of the %d line of the matrix. You probably requested a over the bit limit of %d\n", l, INT_MAX);
+                fprintf(stderr, "ERROR: Error during the initialization of the %d line of the matrix. You probably requested a over the bit limit of %d\n", x, INT_MAX);
             }
         }
     } else {
@@ -126,23 +126,23 @@ char* interpretChar (char n) {
 
 /**
  * Print the content of the specified matrix
- * @param lineNumber - number of lines
- * @param columnNumber - number of columns
+ * @param sizeX - number of columns
+ * @param sizeY - number of lines
  * @param matrix - the matrix [lineNumber X columnNumber] to print
  */
-void printLevel (int lineNumber, int columnNumber, char** matrix) {
-    int l;
-    int c;
+void printLevel (int sizeX, int sizeY, char** matrix) {
+    int x;
+    int y;
     printf("\n ------------------ Current board ------------------ \n");
 
-    for(l=0; l<lineNumber; l++) {
+    for(x=0; x<sizeX; x++) {
         printf("\t[");
-        for (c=0; c<columnNumber-1; c++) {
-            char * content = interpretChar(matrix[l][c]);
+        for (y=0; y<sizeY-1; y++) {
+            char* content = interpretChar(matrix[x][y]);
             printf("%s, ", content);
             free(content);
         }
-        char* content = interpretChar(matrix[l][c]);
+        char* content = interpretChar(matrix[x][y]);
         printf("%s] \n",content);
         free(content);
     }
@@ -152,15 +152,15 @@ void printLevel (int lineNumber, int columnNumber, char** matrix) {
 
 /**
  * Free the the content of the specified matrix
- * @param lineNumber - number of lines
+ * @param sizeX - number of columns
  * @param matrix - the matrix to free, it will be modified by this function (by address parameter passing)
  */
-void freeMatrix (int lineNumber, char*** matrix) {
+void freeMatrix (int sizeX, char*** matrix) {
     if (*matrix!= NULL) {
-        for (int l = 0; l < lineNumber; l++) {
-            if ((*matrix)[l] != NULL) {
-                free((*matrix)[l]);
-                (*matrix)[l] = NULL;
+        for (int x = 0; x < sizeX; x++) {
+            if ((*matrix)[x] != NULL) {
+                free((*matrix)[x]);
+                (*matrix)[x] = NULL;
             }
         }
         free(*matrix);
