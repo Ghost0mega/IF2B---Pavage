@@ -17,3 +17,5 @@ Le projet est dans **/stuff**
 **git branch [nom]** pour creer une nouvelle branche
 
 **git checkout [nom]** pour changer de branche
+
+**git merge [nom] -m "[message]"** fussionne la branche [nom] avec la branche actuelle
