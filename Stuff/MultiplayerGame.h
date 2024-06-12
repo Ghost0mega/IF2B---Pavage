@@ -2,17 +2,17 @@
 #define STUFF_MULTIPLAYERGAME_H
 #include "Utilities.h"
 
-struct MultiplayerGame {
+typedef struct MultiplayerGame {
     boolean isHardDifficulty;
     int sizeX;
     int sizeY;
     char** field;           //rows = x, columns = y
-    char** handPlayer1[5];
-    char** handPlayer2[5];
+    char*** handPlayer1;
+    char*** handPlayer2;
     int scorePlayer1;
     int scorePlayer2;
     boolean isPlayer1Turn;  //false = is player 2's turn
-};
+} MultiplayerGame;
 
 /**
  * Creates a new multiplayer game
