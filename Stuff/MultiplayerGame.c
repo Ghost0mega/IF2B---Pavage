@@ -9,4 +9,10 @@
  */
 void newMultiplayerGame(int sizeX, int sizeY, boolean hardDifficulty) {
     printf("Multiplayer | Rows : %d | Columns : %d | HardDifficulty : %s\n", sizeX, sizeY, hardDifficulty ? "true" : "false");
+    struct MultiplayerGame Game = {
+            .sizeX = sizeX,
+            .sizeY = sizeY,
+            .isHardDifficulty = hardDifficulty,
+            .field = (char**) malloc(sizeof(char*))
+    };
 }

@@ -2,7 +2,7 @@
 #include "Utilities.h"
 #include "Singleplayergame.h"
 #include "MultiplayerGame.h"
-#define testMode 1
+#define testMode 0
 
 /**
  * Asks the user what parameters they want for the start of their game and calls the appropriate function
