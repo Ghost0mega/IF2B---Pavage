@@ -38,15 +38,28 @@ void newMultiplayerGame(int sizeX, int sizeY, boolean hardDifficulty) {
         printLevel(3,3,game.handPlayer2[i]);
     }
 
-    /*
-    for (int i = 0; i < 5; i++) {   //free everything
-        freeMatrix(sizeX,&game.handPlayer1[i]);
-        freeMatrix(sizeX,&game.handPlayer2[i]);
+//free everything
+    for (int i = 0; i < 5; i++) {
+        for (int x = 0; x < 3; x++) {
+            free(game.handPlayer1[i][x]);
+            game.handPlayer1[i][x] = NULL;
+        }
+        free(game.handPlayer1[i]);
+        game.handPlayer1[i] = NULL;
     }
-     */
     free(game.handPlayer1);
     game.handPlayer1 = NULL;
+
+    for (int i = 0; i < 5; i++) {
+        for (int x = 0; x < 3; x++) {
+            free(game.handPlayer2[i][x]);
+            game.handPlayer2[i][x] = NULL;
+        }
+        free(game.handPlayer2[i]);
+        game.handPlayer2[i] = NULL;
+    }
     free(game.handPlayer2);
     game.handPlayer2 = NULL;
+
     freeMatrix(sizeX,&game.field);
 }
