@@ -38,7 +38,7 @@ char** createAndInitializeMatrix (int lineNumber, int columnNumber) {
  * @param tab the array to check in
  * @param x
  * @param y
- * @return TRUE if the space is available '0', FALSE if theres already something else
+ * @return TRUE if the space is available TRUE, FALSE if theres already something else
  */
 boolean checkIfSpaceIsEmpty (char** tab, int x, int y) {
     if (tab[x][y] == '3') {
@@ -61,7 +61,7 @@ void initializeTile (char*** tile, boolean isHardDifficulty, boolean isMultiplay
             (*tile)[i][j] = '3';
         }
     }
-    int howManyNumbers = isHardDifficulty ? rand() % 2 + 2 /*2 a 4 + 2lettres*/ : rand() % 2 + 1/*1 a 3*/ /*+ 1lettres*/;        //Faire recherches sur operateurs ternaires
+    int howManyNumbers = isHardDifficulty ? rand() % 2 + 2 /*2 a 4*/ : rand() % 2 + 1/*1 a 3*/;        //Faire recherches sur operateurs ternaires
     int x, y;
     boolean placed = FALSE;
     for (int i = 0; i < (isHardDifficulty ? 2 : 1); i++) {
@@ -85,7 +85,7 @@ void initializeTile (char*** tile, boolean isHardDifficulty, boolean isMultiplay
             y = rand() % 3;
             if (checkIfSpaceIsEmpty(*tile, x, y)) {
                 placed = TRUE;
-                (*tile)[x][y] = !isPlayer1 ? (char)(rand() % 2 + 49) : (char)(rand() % 2 + 52);
+                (*tile)[x][y] = !isPlayer1 ? (char)(rand() % 3 + 48) : (char)(rand() % 3 + 52);
             }
         } while (!placed);
         placed = FALSE;

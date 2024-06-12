@@ -29,7 +29,7 @@ char** createAndInitializeMatrix (int lineNumber, int columnNumber);
  * @param tab the array to check in
  * @param x
  * @param y
- * @return TRUE if the space is available '0', FALSE if theres already something else
+ * @return TRUE if the space is available TRUE, FALSE if theres already something else
  */
 boolean checkIfSpaceIsEmpty (char** tab, int x, int y);
 
