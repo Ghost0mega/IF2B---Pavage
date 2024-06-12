@@ -1,6 +1,7 @@
 # IF2B-Pavage
 Projet pour l'UV IF2B de P2024, Fait par Thomas Meyer, Amber Guyenot-Cosio et Elven Bosc--Charlès du groupe U
 
+hello world
 
 ## / ! \ IMPORTANT / ! \  
 Oubliez pas de mettre votre fichier **cmakebuilddebug** et **.idea** dans le gitignore
