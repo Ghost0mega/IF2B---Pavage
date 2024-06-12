@@ -12,10 +12,14 @@ Interpretation des nombres dans les cases:
 
 Le projet est dans **/stuff**
 
-## Rappels Git
+## Rappels GitBash
 
 **git branch [nom]** pour creer une nouvelle branche
 
 **git checkout [nom]** pour changer de branche
 
-**git merge [nom] -m "[message]"** fussionne la branche [nom] avec la branche actuelle
+**git merge [nom] -m "[message]"** fusionne la branche [nom] avec la branche actuelle
+
+**git add [filepath]** ajoute les modifications du fichier a [filepath] au prochain commit
+
+**git commit -m "[message]"** si le commit est vide affiche les chemins des fichiers modifies et sinon commit les modifications selectionnes dans la branche actuelle
