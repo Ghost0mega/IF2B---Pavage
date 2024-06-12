@@ -12,4 +12,5 @@
  */
 void newSingleplayerGame(int sizeX, int sizeY, boolean hardDifficulty) {
     printf("Singleplayer | Rows : %d | Columns : %d | HardDifficulty : %s\n", sizeY, sizeX, hardDifficulty ? "true" : "false");
+
 }

@@ -26,4 +26,11 @@ struct SingleplayerGame {
  */
 void newSingleplayerGame(int sizeX, int sizeY, boolean hardDifficulty);
 
+/**
+ * Initialise the game
+ * @param sizeX number of columns in the grid
+ * @param sizeX number of rows in the grid
+ */
+//void initialiseGrid
+
 #endif //STUFF_SINGLEPLAYERGAME_H
