@@ -15,3 +15,5 @@ Le projet est dans **/stuff**
 ## Rappels Git
 
 **git branch [nom]** pour creer une nouvelle branche
+
+**git checkout [nom]** pour changer de branche
