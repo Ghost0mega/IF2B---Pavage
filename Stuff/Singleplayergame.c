@@ -12,4 +12,23 @@
  */
 void newSingleplayerGame(int sizeX, int sizeY, boolean hardDifficulty) {
     printf("Singleplayer | Rows : %d | Columns : %d | HardDifficulty : %s\n", sizeY, sizeX, hardDifficulty ? "true" : "false");
+
+    Singleplayergame game = {
+            .sizeX = sizeX,
+            .sizeY = sizeY,
+            .isHardDifficulty = hardDifficulty,
+            .field = createAndInitializeMatrix(sizeX,sizeY),
+            .hand = (char***) malloc(sizeof(char)*5*3*3),
+            .score = 0
+    };
+
+    for (int i = 0; i < 5; i++) {
+        game.hand[i] = createAndInitializeMatrix(3,3);
+        initializeTile(&game.hand[i],hardDifficulty,FALSE,TRUE);
+    }
+
+    free(game.hand);
+    freeMatrix(sizeX,game.field);
+    game.hand = NULL;
+
 }

@@ -7,14 +7,14 @@
 #include "Utilities.h"
 
 
-struct SingleplayerGame {
+typedef struct {
     boolean isHardDifficulty;
     int sizeX;
     int sizeY;
     char** field;       //rows = x, columns = y
-    char** hand[5];
+    char*** hand;
     int score;
-};
+} Singleplayergame;
 
 
 
