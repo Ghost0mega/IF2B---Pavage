@@ -1,8 +1,6 @@
 # IF2B-Pavage
 Projet pour l'UV IF2B de P2024, Fait par Thomas Meyer, Amber Guyenot-Cosio et Elven Bosc--Charlès du groupe U
 
-hello world
-
 ## / ! \ IMPORTANT / ! \  
 Oubliez pas de mettre votre fichier **cmakebuilddebug** et **.idea** dans le gitignore
 
@@ -13,5 +11,3 @@ Interpretation des nombres dans les cases:
 0 = -3 / 1 = -2 / 2 = -1 / 3 = 0 / 4 = 1 / 5 = 2 / 6 = 3
 
 Le projet est dans **/stuff**
-
-test branching 2 times
