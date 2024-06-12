@@ -7,14 +7,14 @@
 #include "Utilities.h"
 
 
-struct SingleplayerGame {
+typedef struct {
     boolean isHardDifficulty;
     int sizeX;
     int sizeY;
     char** field;       //rows = x, columns = y
-    char** hand[5];
+    char*** hand;
     int score;
-};
+} Singleplayergame;
 
 
 
@@ -25,12 +25,5 @@ struct SingleplayerGame {
  * @param hardDifficulty is hard difficulty enabled
  */
 void newSingleplayerGame(int sizeX, int sizeY, boolean hardDifficulty);
-
-/**
- * Initialise the game
- * @param sizeX number of columns in the grid
- * @param sizeX number of rows in the grid
- */
-//void initialiseGrid
 
 #endif //STUFF_SINGLEPLAYERGAME_H
