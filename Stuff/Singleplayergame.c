@@ -27,8 +27,28 @@ void newSingleplayerGame(int sizeX, int sizeY, boolean hardDifficulty) {
         initializeTile(&game.hand[i],hardDifficulty,FALSE,TRUE);
     }
 
+    for (int i = 0; i < sizeX; i++) {
+        for (int j = 0; j < sizeY; j++) {
+            game.field[i][j] = '0';
+        }
+        free(game.field[i]);
+        game.field[i] = NULL;
+    }
+    free(game.field);
+    game.field = NULL;
+
+    for (int i = 0; i < 5; i++) {
+        for (int j = 0; j < 3; ++j) {
+            for (int k = 0; k < 3; ++k) {
+                game.hand[i][j][k] = '0';
+            }
+            free(game.hand[i][j]);
+            game.hand[i][j] = NULL;
+        }
+        free(game.hand[i]);
+        game.hand[i] = NULL;
+    }
     free(game.hand);
-    freeMatrix(sizeX,game.field);
     game.hand = NULL;
 
 }
