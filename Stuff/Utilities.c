@@ -167,3 +167,22 @@ void freeMatrix (int sizeX, char*** matrix) {
         *matrix = NULL;
     }
 }
+
+/**
+ * Free the the content of the specified matrix
+ * @param sizeZ - number of superpositions
+ * @param sizeX - number of columns
+ * @param matrix - the matrix to free, it will be modified by this function (by address parameter passing)
+ */
+void free3dMatrix (int sizeZ, int sizeX, char**** matrix) {
+    for (int i = 0; i < sizeZ; i++) {
+        for (int x = 0; x < sizeX; x++) {
+            free((*matrix)[i][x]);
+            (*matrix)[i][x] = NULL;
+        }
+        free((*matrix)[i]);
+        (*matrix)[i] = NULL;
+    }
+    free(*matrix);
+    *matrix = NULL;
+}

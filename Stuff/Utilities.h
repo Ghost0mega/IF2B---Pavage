@@ -64,4 +64,11 @@ void printLevel (int sizeX, int sizeY, char** matrix);
  */
 void freeMatrix (int sizeX, char*** matrix);
 
+/**
+ * Free the the content of the specified matrix
+ * @param sizeZ - number of superpositions
+ * @param sizeX - number of columns
+ * @param matrix - the matrix to free, it will be modified by this function (by address parameter passing)
+ */
+void free3dMatrix (int sizeZ, int sizeX, char**** matrix);
 #endif //STUFF_UTILITIES_H

@@ -28,16 +28,7 @@ void newSingleplayerGame(int sizeX, int sizeY, boolean hardDifficulty) {
     }
 
     //free everything
-    for (int i = 0; i < 5; i++) {
-        for (int x = 0; x < 3; x++) {
-            free(game.hand[i][x]);
-            game.hand[i][x] = NULL;
-        }
-        free(game.hand[i]);
-        game.hand[i] = NULL;
-    }
-    free(game.hand);
-    game.hand = NULL;
+    free3dMatrix(5,3,&game.hand);
     freeMatrix(sizeX,&game.field);
 
 }
