@@ -50,12 +50,31 @@ void initializeTile (char*** tile, boolean isHardDifficulty, boolean isMultiplay
 char* interpretChar (char n);
 
 /**
+ * Prints a tile array
+ * @param isPlayer1 to show the correct text in the header
+ * @param hand the current player's hand
+ */
+void printHand (boolean isPlayer1, char*** hand);
+
+/**
  * Print the content of the specified matrix
  * @param sizeX - number of columns
  * @param sizeY - number of lines
  * @param matrix - the matrix [lineNumber X columnNumber] to print
  */
 void printLevel (int sizeX, int sizeY, char** matrix);
+
+/**
+ * will print the current state of the game
+ * @param isPlayer1Turn to show the correct text in the header
+ * @param level matrix storing the level data
+ * @param sizeXlevel number of columns
+ * @param sizeYlevel number of lines
+ * @param hand the current player's hand
+ * @param scorePlayer1
+ * @param scorePlayer2 set to -1 if single-player game
+ */
+void printTurn (boolean isPlayer1Turn, char** level, int sizeXlevel, int sizeYlevel, char*** hand, int scorePlayer1, int scorePlayer2);
 
 /**
  * Free the the content of the specified matrix

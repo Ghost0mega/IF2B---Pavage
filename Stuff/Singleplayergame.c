@@ -26,6 +26,8 @@ void newSingleplayerGame(int sizeX, int sizeY, boolean hardDifficulty) {
         game.hand[i] = createAndInitializeMatrix(3,3);
         initializeTile(&game.hand[i],hardDifficulty,FALSE,TRUE);
     }
+    printTurn(TRUE, game.field, game.sizeX, game.sizeY, game.hand, game.score, -1);
+
 
     //free everything
     free3dMatrix(5,3,&game.hand);

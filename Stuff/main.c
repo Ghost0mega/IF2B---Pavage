@@ -73,9 +73,12 @@ int main(int argc, char** argv) {
     srand(time(0));
     int iterations = 5;
     for (int i = 0; i < iterations; i++) {
+        newSingleplayerGame(15,10,TRUE);
+        /*
         char **handtest = createAndInitializeMatrix(3, 3);
         initializeTile(&handtest, TRUE, TRUE, FALSE);
         printLevel(3, 3, handtest);
+         */
     }
 
 #else

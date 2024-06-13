@@ -27,17 +27,13 @@ void newMultiplayerGame(int sizeX, int sizeY, boolean hardDifficulty) {
         initializeTile(&game.handPlayer1[i], hardDifficulty, TRUE, TRUE);
         initializeTile(&game.handPlayer2[i], hardDifficulty, TRUE, FALSE);
     }
-    //Verif
+    printTurn(TRUE, game.field, game.sizeX, game.sizeY, game.handPlayer1, game.scorePlayer1, game.scorePlayer2);
+    printTurn(FALSE, game.field, game.sizeX, game.sizeY, game.handPlayer2, game.scorePlayer1, game.scorePlayer2);
+    /*
     printLevel(sizeX,sizeY,game.field);
-    printf("PLAYER 1\n");
-    for (int i = 0; i < 5; i++){
-        printLevel(3,3,game.handPlayer1[i]);
-    }
-    printf("PLAYER 2\n");
-    for (int i = 0; i < 5; i++){
-        printLevel(3,3,game.handPlayer2[i]);
-    }
-
+    printHand(TRUE, game.handPlayer1);
+    printHand(FALSE, game.handPlayer2);
+    */
 //free everything
     free3dMatrix(5,3,&game.handPlayer1);
     free3dMatrix(5,3,&game.handPlayer2);
