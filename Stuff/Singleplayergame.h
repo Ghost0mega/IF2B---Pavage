@@ -21,9 +21,8 @@ typedef struct {
 /**
  * Creates a new single player game
  * @param sizeX number of columns in the grid
- * @param sizeX number of rows in the grid
+ * @param sizeY number of rows in the grid
  * @param hardDifficulty is hard difficulty enabled
  */
 void newSingleplayerGame(int sizeX, int sizeY, boolean hardDifficulty);
-
 #endif //STUFF_SINGLEPLAYERGAME_H
