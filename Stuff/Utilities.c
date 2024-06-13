@@ -242,11 +242,13 @@ void placeTile (char*** level, char** tile, int anchorLevelX, int anchorLevelY, 
  * @param isHardMode the difficulty of the current game
  * @return the player's score at the end of the turn, if they give up the function will return score * -1
  */
-int playerTurn (char*** level, char*** hand, int score, boolean isFirstTurn, boolean isHardMode) {
+int playerTurn (char*** level, int sizeX, int sizeY, char*** hand, int score, boolean isFirstTurn, boolean isHardMode) {
     boolean endTurn = FALSE;
     boolean proceed;
     int anchorTileX;
     int anchorTileY;
+    int placementX;
+    int placementY;
     int tileIndex;
     char input[10];
     do {
@@ -260,6 +262,7 @@ int playerTurn (char*** level, char*** hand, int score, boolean isFirstTurn, boo
             case '1':
                 tileIndex = -1;
                 do{
+                    printf("Which tile do you wish to place (1-5) ?\n");
                     fflush(stdin);
                     scanf("%s", input);
                     if (input[0] > '0' && input[0] < '6') {
@@ -270,6 +273,44 @@ int playerTurn (char*** level, char*** hand, int score, boolean isFirstTurn, boo
                 } while (tileIndex == -1);
                 locateTileAnchor(hand[tileIndex], &anchorTileX, &anchorTileY);
 
+                do {
+                    proceed = FALSE;
+                    printf("In what column do you want the %c to be in (1-%d) ?\n", hand[tileIndex][anchorTileX][anchorTileY], sizeX);
+                    do{
+                        fflush(stdin);
+                        scanf("%s", input);
+                        placementX = atoi(input) - 1;        //atoi works bc we always want a value above 0 anyway
+                        if (placementX < 0 || placementX > sizeX) {
+                            fprintf(stderr, "ERROR: Invalid input please use an existing index (1-%d)\n", sizeX);
+                        } else {
+                            proceed = TRUE;
+                        }
+                    } while (!proceed);
+                    proceed = FALSE;
+                    printf("In what line do you want the %c to be in (1-%d) ?\n", hand[tileIndex][anchorTileX][anchorTileY], sizeY);
+                    do{
+                        fflush(stdin);
+                        scanf("%s", input);
+                        placementY = atoi(input) - 1;        //atoi works bc we always want a value above 0 anyway
+                        if (placementY < 0 || placementY > sizeY) {
+                            fprintf(stderr, "ERROR: Invalid input please use an existing index (1-%d)\n", sizeY);
+                        } else {
+                            proceed = TRUE;
+                        }
+                    } while (!proceed);
+                    /*
+                     * if (TEST PLACEMENT) {
+                     * proceed = TRUE;
+                     * } else {
+                     * fprintf(stderr, "ERROR: Invalid placement\n");
+                     * proceed = FALSE;
+                     * }
+                     */
+                    proceed = TRUE; //remove when placement test is built
+                } while (!proceed);
+                placeTile(level, hand[tileIndex], placementX, placementY, anchorTileX, anchorTileY);
+                score++;
+                endTurn = TRUE;
                 break;
             case '2':
                 printf("Are you sure you want to give up ( y / n ) ?\n");
