@@ -71,7 +71,7 @@ void initializeTile (char*** tile, boolean isHardDifficulty, boolean isMultiplay
             if (checkIfSpaceIsEmpty(*tile, x, y)) {
                 placed = TRUE;
                 if (isMultiplayer) {
-                    (*tile)[x][y] = isPlayer1 ? (char)(rand() % 2 + 65) : (char)(rand() % 2 + 88);
+                    (*tile)[x][y] = isPlayer1 ? (char)(65 + i) : (char)(88 + i);
                 } else {
                     (*tile)[x][y] = (char) (rand() % 26 + 65);
                 }
@@ -195,6 +195,113 @@ void printTurn (boolean isPlayer1Turn, char** level, int sizeXlevel, int sizeYle
     }
     printHand(isPlayer1Turn,hand);
 }
+
+
+/**
+ * will edit anchorX and anchorY to feature the coordinates of the first letter in the tile
+ * @param tile
+ * @param anchorX
+ * @param anchorY
+ */
+void locateTileAnchor(char** tile, int* anchorX, int* anchorY) {
+    boolean found = FALSE;
+    int x = 0;
+    int y = 0;
+    while (!found && x < 3) {
+        while (!found && y < 3) {
+            if (tile[x][y] >= 'A' && tile[x][y] <= 'Z') {
+                *anchorX = x;
+                *anchorY = y;
+                found = TRUE;
+            }
+            y++;
+        }
+        x++;
+    }
+}
+
+/**
+ * will place the tile in the level using the anchor coordinates
+ * @param level the array that will receive the tile
+ * @param tile the tile to place
+ * @param anchorLevelX x level to place tile anchor in
+ * @param anchorLevelY y level to place tile anchor in
+ * @param anchorTileX internal x level of tile anchor
+ * @param anchorTileY internal y level of tile anchor
+ */
+void placeTile (char*** level, char** tile, int anchorLevelX, int anchorLevelY, int anchorTileX, int anchorTileY) {
+
+}
+
+/**
+ * allows a player to play their turn
+ * @param level the current level
+ * @param hand the current player's hand
+ * @param score the current player's score
+ * @param isFirstTurn used for the rule exception at first turn
+ * @param isHardMode the difficulty of the current game
+ * @return the player's score at the end of the turn, if they give up the function will return score * -1
+ */
+int playerTurn (char*** level, char*** hand, int score, boolean isFirstTurn, boolean isHardMode) {
+    boolean endTurn = FALSE;
+    boolean proceed;
+    int anchorTileX;
+    int anchorTileY;
+    int tileIndex;
+    char input[10];
+    do {
+        printf(" 1 - Place a tile\n 2 - Give up\n3 - Save\n");
+        fflush(stdin);
+        scanf("%s", input);
+        switch (input[0]) {
+            default:
+                fprintf(stderr, "ERROR: Invalid input please use the index of an existing option\n");
+                break;
+            case '1':
+                tileIndex = -1;
+                do{
+                    fflush(stdin);
+                    scanf("%s", input);
+                    if (input[0] > '0' && input[0] < '6') {
+                        tileIndex = input[0] - '1';
+                    } else {
+                        fprintf(stderr, "ERROR: Invalid input please use the index of an existing tile\n");
+                    }
+                } while (tileIndex == -1);
+                locateTileAnchor(hand[tileIndex], &anchorTileX, &anchorTileY);
+
+                break;
+            case '2':
+                printf("Are you sure you want to give up ( y / n ) ?\n");
+                do {
+                    proceed =FALSE;
+                    fflush(stdin);
+                    scanf("%s", input);
+                    input[0] = toupper(input[0]);
+                    switch (input[0]) {
+                        default:
+                            fprintf(stderr, "ERROR: Invalid input please use 'y' for yes and 'n' for no\n");
+                            break;
+                        case 'Y':
+                            printf("You gave up.\n");
+                            score = score * -1;
+                            proceed = TRUE;
+                            endTurn = TRUE;
+                            break;
+                        case 'N':
+                            printf("Going back.\n\n");
+                            proceed = TRUE;
+                            break;
+                    }
+                } while (!proceed);
+            case '3':
+                fprintf(stderr, "Not implemented yet\n");
+        }
+    } while (!endTurn);
+    return score;
+}
+
+
 
 /**
  * Free the the content of the specified matrix
