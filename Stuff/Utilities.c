@@ -109,7 +109,7 @@ char* interpretChar (char n) {
             strcpy(output, "-1");
             break;
         case '3':
-            output[0] = '0';
+            output[0] = ' ';
             break;
         case '4':
             output[0] = '1';
@@ -125,6 +125,27 @@ char* interpretChar (char n) {
 }
 
 /**
+ * Prints the tile array that has the hand data
+ * @param isPlayer1 to show the correct text in the header
+ * @param hand the current player's hand
+ */
+void printHand (boolean isPlayer1, char*** hand) {
+    printf(" --------------------------- %s --------------------------- \n", isPlayer1 ? "PLAYER 1'S HAND" : "PLAYER 2'S HAND");
+    printf("Tile 1 :\tTile 2 :\tTile 3 :\tTile 4 :\tTile 5 :\n");
+    for (int y = 0; y < 3; y++) {           //lines last to be able to optimize the space
+        for (int i = 0; i < 5; i++) {
+            printf("[");
+            for (int x = 0; x < 2; x++) {
+                printf("%s, ", interpretChar(hand[i][x][y]));
+            }
+            printf("%s]\t", interpretChar(hand[i][2][y]));
+        }
+        printf("\n");
+    }
+    printf(" ----------------------------------------------------------------------- \n");
+}
+
+/**
  * Print the content of the specified matrix
  * @param sizeX - number of columns
  * @param sizeY - number of lines
@@ -133,10 +154,14 @@ char* interpretChar (char n) {
 void printLevel (int sizeX, int sizeY, char** matrix) {
     int x;
     int y;
-    printf("\n ------------------ Current board ------------------ \n");
-
+    printf("\n ---------------------------- Current board ---------------------------- \n");
+    printf("\t ");
+    for (int i = 1; i <= sizeX; i++){
+        printf("%d%s", i, i > 9 ? " " : "  ");      //to keep it aligned
+    }
+    printf("\n");
     for(y=0; y<sizeY; y++) {
-        printf("\t[");
+        printf("     %c\t[", y + 'A');
         for (x=0; x<sizeX-1; x++) {
             char* content = interpretChar(matrix[x][y]);
             printf("%s, ", content);
@@ -146,9 +171,30 @@ void printLevel (int sizeX, int sizeY, char** matrix) {
         printf("%s] \n",content);
         free(content);
     }
-    printf(" --------------------------------------------------- \n");
+    printf(" ----------------------------------------------------------------------- \n");
 }
 
+
+/**
+ * will print the current state of the game
+ * @param isPlayer1Turn to show the correct text in the header
+ * @param level matrix storing the level data
+ * @param sizeXlevel number of columns
+ * @param sizeYlevel number of lines
+ * @param hand the current player's hand
+ * @param scorePlayer1
+ * @param scorePlayer2 set to -1 if single-player game
+ */
+void printTurn (boolean isPlayer1Turn, char** level, int sizeXlevel, int sizeYlevel, char*** hand, int scorePlayer1, int scorePlayer2) {
+    printLevel(sizeXlevel,sizeYlevel,level);
+    printf("PLAYER %c'S TURN\t\t\t\t\t\t", isPlayer1Turn ? '1' : '2');
+    if (scorePlayer2 != -1) {
+        printf("SCORE : %d | %d\n", scorePlayer1, scorePlayer2);
+    } else {
+        printf("SCORE : %d\n", scorePlayer1);
+    }
+    printHand(isPlayer1Turn,hand);
+}
 
 /**
  * Free the the content of the specified matrix
