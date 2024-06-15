@@ -97,7 +97,8 @@ char* interpretChar (char n) {
     output[1] = '\0';
     switch (n) {
         default:
-            output[0] = n;
+            output[0] = ' ';
+            output[1] = n;
             break;
         case '0':
             strcpy(output, "-3");
@@ -109,16 +110,16 @@ char* interpretChar (char n) {
             strcpy(output, "-1");
             break;
         case '3':
-            output[0] = ' ';
+            strcpy(output, "  ");
             break;
         case '4':
-            output[0] = '1';
+            strcpy(output, " 1");
             break;
         case '5':
-            output[0] = '2';
+            strcpy(output, " 2");
             break;
         case '6':
-            output[0] = '3';
+            strcpy(output, " 3");
             break;
     }
     return output;
@@ -130,7 +131,7 @@ char* interpretChar (char n) {
  * @param hand the current player's hand
  */
 void printHand (boolean isPlayer1, char*** hand) {
-    printf(" --------------------------- %s --------------------------- \n", isPlayer1 ? "PLAYER 1'S HAND" : "PLAYER 2'S HAND");
+    printf(" ----------------------------- %s ----------------------------- \n", isPlayer1 ? "PLAYER 1'S HAND" : "PLAYER 2'S HAND");
     printf("Tile 1 :\tTile 2 :\tTile 3 :\tTile 4 :\tTile 5 :\n");
     for (int y = 0; y < 3; y++) {           //lines last to be able to optimize the space
         for (int i = 0; i < 5; i++) {
@@ -142,7 +143,7 @@ void printHand (boolean isPlayer1, char*** hand) {
         }
         printf("\n");
     }
-    printf(" ----------------------------------------------------------------------- \n");
+    printf(" --------------------------------------------------------------------------- \n");
 }
 
 /**
@@ -154,10 +155,10 @@ void printHand (boolean isPlayer1, char*** hand) {
 void printLevel (int sizeX, int sizeY, char** matrix) {
     int x;
     int y;
-    printf("\n ---------------------------- Current board ---------------------------- \n");
+    printf("\n ------------------------------ Current board ------------------------------ \n");
     printf("\t ");
     for (int i = 1; i <= sizeX; i++){
-        printf("%d%s", i, i > 9 ? " " : "  ");      //to keep it aligned
+        printf("%d%s", i, i > 9 ? "  " : "   ");      //to keep it aligned
     }
     printf("\n");
     for(y=0; y<sizeY; y++) {
@@ -171,7 +172,7 @@ void printLevel (int sizeX, int sizeY, char** matrix) {
         printf("%s] \n",content);
         free(content);
     }
-    printf(" ----------------------------------------------------------------------- \n");
+    printf(" --------------------------------------------------------------------------- \n");
 }
 
 
@@ -187,9 +188,9 @@ void printLevel (int sizeX, int sizeY, char** matrix) {
  */
 void printTurn (boolean isPlayer1Turn, char** level, int sizeXlevel, int sizeYlevel, char*** hand, int scorePlayer1, int scorePlayer2) {
     printLevel(sizeXlevel,sizeYlevel,level);
-    printf("PLAYER %c'S TURN\t\t\t\t\t\t", isPlayer1Turn ? '1' : '2');
+    printf(" PLAYER %c'S TURN\t\t\t\t\t", isPlayer1Turn ? '1' : '2');
     if (scorePlayer2 != -1) {
-        printf("SCORE : %d | %d\n", scorePlayer1, scorePlayer2);
+        printf("       SCORE : %d | %d\n", scorePlayer1, scorePlayer2);
     } else {
         printf("SCORE : %d\n", scorePlayer1);
     }
@@ -205,9 +206,11 @@ void printTurn (boolean isPlayer1Turn, char** level, int sizeXlevel, int sizeYle
  */
 void locateTileAnchor(char** tile, int* anchorX, int* anchorY) {
     boolean found = FALSE;
-    int x = 0;
     int y = 0;
+    int x;
+
     while (!found && y < 3) {
+        x = 0;
         while (!found && x < 3) {
             if (tile[x][y] >= 'A' && tile[x][y] <= 'Z') {
                 *anchorX = x;
@@ -218,6 +221,11 @@ void locateTileAnchor(char** tile, int* anchorX, int* anchorY) {
         }
         y++;
     }
+    // If no letter was found in the tile array, set anchorX and anchorY to a default value ---> useless
+//    if (!found) {
+//        *anchorX = -1;
+//        *anchorY = -1;
+//    }
 }
 
 /**
@@ -236,7 +244,7 @@ void placeTile (char*** level, int levelX, int levelY, char** tile, int anchorLe
     int absoluteY = anchorLevelY - anchorTileY;
     for (int x = 0; x < 3; x++) {
         for (int y = 0; y < 3; y++) {
-            if (absoluteX + x >= 0 && absoluteX + x < levelX && absoluteY + y >= 0 && absoluteY + y < levelY) {
+            if (absoluteX + x >= 0 && absoluteX + x < levelX && absoluteY + y >= 0 && absoluteY + y < levelY && tile[x][y] != '3') {
                 (*level)[absoluteX + x][absoluteY + y] = tile[x][y];
             }
         }
@@ -246,13 +254,17 @@ void placeTile (char*** level, int levelX, int levelY, char** tile, int anchorLe
 /**
  * allows a player to play their turn
  * @param level the current level
+ * @param sizeX
+ * @param sizeY The dimensions of the level
  * @param hand the current player's hand
  * @param score the current player's score
  * @param isFirstTurn used for the rule exception at first turn
  * @param isHardMode the difficulty of the current game
+ * @param isMultiplayer if the game is multiplayer
+ * @param isPlayer1 if the current player is player 1
  * @return the player's score at the end of the turn, if they give up the function will return score * -1
  */
-int playerTurn (char*** level, int sizeX, int sizeY, char*** hand, int score, boolean isFirstTurn, boolean isHardMode) {
+int playerTurn (char*** level, int sizeX, int sizeY, char*** hand, int score, boolean isFirstTurn, boolean isHardMode, boolean isMultiplayer, boolean isPlayer1) {
     boolean endTurn = FALSE;
     boolean proceed;
     int anchorTileX;
@@ -321,6 +333,7 @@ int playerTurn (char*** level, int sizeX, int sizeY, char*** hand, int score, bo
                 } while (!proceed);
                 placeTile(level, sizeX, sizeY, hand[tileIndex], placementX, placementY, anchorTileX, anchorTileY);
                 score++;
+                initializeTile(&hand[tileIndex], isHardMode, isMultiplayer, isPlayer1);
                 endTurn = TRUE;
                 break;
             case '2':
@@ -346,10 +359,13 @@ int playerTurn (char*** level, int sizeX, int sizeY, char*** hand, int score, bo
                             break;
                     }
                 } while (!proceed);
+                break;
             case '3':
                 fprintf(stderr, "Not implemented yet\n");
+                break;
         }
     } while (!endTurn);
+    printf("End of turn\n\n\n");
     return score;
 }
 

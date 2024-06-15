@@ -99,16 +99,18 @@ void placeTile (char*** level, int levelX, int levelY, char** tile, int anchorLe
 
 /**
  * allows a player to play their turn
- * @param level the current level
+  * @param level the current level
  * @param sizeX
  * @param sizeY The dimensions of the level
  * @param hand the current player's hand
  * @param score the current player's score
  * @param isFirstTurn used for the rule exception at first turn
  * @param isHardMode the difficulty of the current game
+ * @param isMultiplayer if the game is multiplayer
+ * @param isPlayer1 if the current player is player 1
  * @return the player's score at the end of the turn, if they give up the function will return score * -1
  */
-int playerTurn (char*** level, int sizeX, int sizeY, char*** hand, int score, boolean isFirstTurn, boolean isHardMode);
+int playerTurn (char*** level, int sizeX, int sizeY, char*** hand, int score, boolean isFirstTurn, boolean isHardMode, boolean isMultiplayer, boolean isPlayer1);
 
 /**
  * Free the the content of the specified matrix
