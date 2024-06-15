@@ -15,6 +15,12 @@ typedef struct MultiplayerGame {
 } MultiplayerGame;
 
 /**
+ * The main loop of the multiplayer game
+ * @param game the game to play
+ */
+void multiplayerGameLoop(MultiplayerGame* game);
+
+/**
  * Creates a new multiplayer game
  * @param sizeX number of columns in the grid
  * @param sizeY number of rows in the gridd
@@ -22,9 +28,3 @@ typedef struct MultiplayerGame {
  */
 void newMultiplayerGame(int sizeX, int sizeY, boolean hardDifficulty);
 #endif //STUFF_MULTIPLAYERGAME_H
-
-/**
- * The main loop of the multiplayer game
- * @param game the game to play
- */
-void multiplayerGameLoop(MultiplayerGame* game);

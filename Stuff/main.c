@@ -2,7 +2,7 @@
 #include "Utilities.h"
 #include "Singleplayergame.h"
 #include "MultiplayerGame.h"
-#define testMode 0
+#define testMode 1
 
 /**
  * Asks the user what parameters they want for the start of their game and calls the appropriate function
@@ -73,8 +73,8 @@ int main(int argc, char** argv) {
     srand(time(0));
     int iterations = 1;
     for (int i = 0; i < iterations; i++) {
-        //newSingleplayerGame(15,10,TRUE);
-        newMultiplayerGame(10,6,TRUE);
+        newSingleplayerGame(10,6,TRUE);
+        //newMultiplayerGame(10,6,TRUE);
         /*
         char **handtest = createAndInitializeMatrix(3, 3);
         initializeTile(&handtest, TRUE, TRUE, FALSE);

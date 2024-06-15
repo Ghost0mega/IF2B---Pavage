@@ -1,8 +1,26 @@
-//
-// Created by Amber GUYENOT-COSIO on 21/05/2024.
-//
-
 #include "Singleplayergame.h"
+
+/**
+ * The main loop of the single player game
+ * @param game the game to play
+ */
+void singleplayerGameLoop(Singleplayergame* game) {
+    boolean gameIsOver = FALSE;
+    boolean gaveUp = FALSE;
+    do {
+        printTurn(FALSE, game->field, game->sizeX, game->sizeY, game->hand, game->score, -1);
+        game->score = playerTurn(&game->field, game->sizeX, game->sizeY, game->hand, game->score, FALSE, game->isHardDifficulty, FALSE, TRUE);
+        if (game->score < 0) {
+            gaveUp = TRUE;
+            game->score = game->score * -1;
+        }
+        if (gaveUp) {
+            gameIsOver = TRUE;
+            printf("You either gave up or couldn't place any more tiles, the game is over.\n");
+        }
+    } while (!gameIsOver);
+    printf("You finished the game with a score of %d\n", game->score);
+}
 
 /**
  * Creates a new single player game
@@ -26,8 +44,7 @@ void newSingleplayerGame(int sizeX, int sizeY, boolean hardDifficulty) {
         game.hand[i] = createAndInitializeMatrix(3,3);
         initializeTile(&game.hand[i],hardDifficulty,FALSE,TRUE);
     }
-    printTurn(TRUE, game.field, game.sizeX, game.sizeY, game.hand, game.score, -1);
-
+    singleplayerGameLoop(&game);
 
     //free everything
     free3dMatrix(5,3,&game.hand);

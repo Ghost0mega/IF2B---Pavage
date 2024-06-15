@@ -73,7 +73,7 @@ void initializeTile (char*** tile, boolean isHardDifficulty, boolean isMultiplay
                 if (isMultiplayer) {
                     (*tile)[x][y] = isPlayer1 ? (char)(65 + i) : (char)(88 + i);
                 } else {
-                    (*tile)[x][y] = (char) (rand() % 26 + 65);
+                    (*tile)[x][y] = (char) (rand() % 26 + 'A');
                 }
             }
         } while (!placed);
@@ -188,11 +188,14 @@ void printLevel (int sizeX, int sizeY, char** matrix) {
  */
 void printTurn (boolean isPlayer1Turn, char** level, int sizeXlevel, int sizeYlevel, char*** hand, int scorePlayer1, int scorePlayer2) {
     printLevel(sizeXlevel,sizeYlevel,level);
-    printf(" PLAYER %c'S TURN\t\t\t\t\t", isPlayer1Turn ? '1' : '2');
+    if (scorePlayer2 != -1) {
+        printf(" PLAYER 1'S TURN\t\t\t\t\t PLAYER 2'S TURN\t\t\t\t\t       SCORE : %d | %d\n", scorePlayer1, scorePlayer2);
+    }
+
     if (scorePlayer2 != -1) {
         printf("       SCORE : %d | %d\n", scorePlayer1, scorePlayer2);
     } else {
-        printf("SCORE : %d\n", scorePlayer1);
+        printf(" SCORE : %d\n", scorePlayer1);
     }
     printHand(isPlayer1Turn,hand);
 }
