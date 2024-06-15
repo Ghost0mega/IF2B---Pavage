@@ -103,15 +103,15 @@ void initializeTile (char*** tile, boolean isHardDifficulty, boolean isMultiplay
 
 char* interpretChar (char n) {
     char *output = (char *) malloc(sizeof(char) * 2);
-    output[1] = '\0';
+    //output[1] = '\0';
     switch (n) {
         default:
             if (n >= 'A' && n <= 'Z') {
                 output[0] = ' ';
                 output[1] = n;
             } else {
-                strcpy(output, "  ");
-            }
+                strcpy(output, "  ");       //WHY CANT I REMOVE ALL THE JUNK ????????????????????????????????
+            }                                           //HOW DOES IT PERSIST ?????
             break;
         case '0':
             strcpy(output, "-3");
@@ -150,9 +150,13 @@ void printHand (boolean isPlayer1, char*** hand) {
         for (int i = 0; i < 5; i++) {
             printf("[");
             for (int x = 0; x < 2; x++) {
-                printf("%s, ", interpretChar(hand[i][x][y]));
+                char* content = interpretChar(hand[i][x][y]);
+                printf("%s, ", content);
+                free(content);
             }
+            char* content = interpretChar(hand[i][2][y]);
             printf("%s]\t", interpretChar(hand[i][2][y]));
+            free(content);
         }
         printf("\n");
     }
