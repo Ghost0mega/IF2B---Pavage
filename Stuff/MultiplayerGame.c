@@ -1,6 +1,49 @@
 #include "MultiplayerGame.h"
 
 
+
+/**
+ * The main loop of the multiplayer game
+ * @param game the game to play
+ */
+void multiplayerGameLoop(MultiplayerGame* game) {
+
+    boolean player1gaveUp = FALSE;
+    boolean player2gaveUp = FALSE;
+    boolean gameIsOver = FALSE;
+    do {
+        if (game->isPlayer1Turn) {
+            printTurn(TRUE, game->field, game->sizeX, game->sizeY, game->handPlayer1, game->scorePlayer1, game->scorePlayer2);
+            game->scorePlayer1 = playerTurn(&game->field, game->sizeX, game->sizeY, game->handPlayer1, game->scorePlayer1, TRUE, game->isHardDifficulty, TRUE, TRUE);
+            if (game->scorePlayer1 < 0) {
+                player1gaveUp = TRUE;
+                game->scorePlayer1 = game->scorePlayer1 * -1;
+            }
+            game->isPlayer1Turn = player2gaveUp ? TRUE : FALSE;
+        } else {
+            printTurn(FALSE, game->field, game->sizeX, game->sizeY, game->handPlayer2, game->scorePlayer2, game->scorePlayer1);
+            game->scorePlayer2 = playerTurn(&game->field, game->sizeX, game->sizeY, game->handPlayer2, game->scorePlayer2, TRUE, game->isHardDifficulty, TRUE, FALSE);
+            if (game->scorePlayer2 < 0) {
+                player2gaveUp = TRUE;
+                game->scorePlayer2 = game->scorePlayer2 * -1;
+            }
+            game->isPlayer1Turn = player1gaveUp ? FALSE : TRUE;
+        }
+        if (player1gaveUp && player2gaveUp) {
+            gameIsOver = TRUE;
+            printf("Both players either gave up or couldn't place any more tiles, the game is over.\n");
+        }
+    } while (!gameIsOver);
+    if (game->scorePlayer1 > game->scorePlayer2) {
+        printf("Player 1 wins with a score of %d over %d\n", game->scorePlayer1, game->scorePlayer2);
+    } else if (game->scorePlayer1 < game->scorePlayer2) {
+        printf("Player 2 wins with a score of %d over %d\n", game->scorePlayer2, game->scorePlayer1);
+    } else {
+        printf("It's a draw!\n");
+    }
+}
+
+
 /**
  * Creates a new multiplayer game
  * @param sizeX number of columns in the grid
@@ -27,8 +70,7 @@ void newMultiplayerGame(int sizeX, int sizeY, boolean hardDifficulty) {
         initializeTile(&game.handPlayer1[i], hardDifficulty, TRUE, TRUE);
         initializeTile(&game.handPlayer2[i], hardDifficulty, TRUE, FALSE);
     }
-    printTurn(TRUE, game.field, game.sizeX, game.sizeY, game.handPlayer1, game.scorePlayer1, game.scorePlayer2);
-    printTurn(FALSE, game.field, game.sizeX, game.sizeY, game.handPlayer2, game.scorePlayer1, game.scorePlayer2);
+    multiplayerGameLoop(&game);
     /*
     printLevel(sizeX,sizeY,game.field);
     printHand(TRUE, game.handPlayer1);

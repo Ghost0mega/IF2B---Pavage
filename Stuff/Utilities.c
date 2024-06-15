@@ -71,9 +71,9 @@ void initializeTile (char*** tile, boolean isHardDifficulty, boolean isMultiplay
             if (checkIfSpaceIsEmpty(*tile, x, y)) {
                 placed = TRUE;
                 if (isMultiplayer) {
-                    (*tile)[x][y] = isPlayer1 ? (char)(rand() % 2 + 65) : (char)(rand() % 2 + 88);
+                    (*tile)[x][y] = isPlayer1 ? (char)(65 + i) : (char)(88 + i);
                 } else {
-                    (*tile)[x][y] = (char) (rand() % 26 + 65);
+                    (*tile)[x][y] = (char) (rand() % 26 + 'A');
                 }
             }
         } while (!placed);
@@ -97,7 +97,8 @@ char* interpretChar (char n) {
     output[1] = '\0';
     switch (n) {
         default:
-            output[0] = n;
+            output[0] = ' ';
+            output[1] = n;
             break;
         case '0':
             strcpy(output, "-3");
@@ -109,16 +110,16 @@ char* interpretChar (char n) {
             strcpy(output, "-1");
             break;
         case '3':
-            output[0] = ' ';
+            strcpy(output, "  ");
             break;
         case '4':
-            output[0] = '1';
+            strcpy(output, " 1");
             break;
         case '5':
-            output[0] = '2';
+            strcpy(output, " 2");
             break;
         case '6':
-            output[0] = '3';
+            strcpy(output, " 3");
             break;
     }
     return output;
@@ -130,7 +131,7 @@ char* interpretChar (char n) {
  * @param hand the current player's hand
  */
 void printHand (boolean isPlayer1, char*** hand) {
-    printf(" --------------------------- %s --------------------------- \n", isPlayer1 ? "PLAYER 1'S HAND" : "PLAYER 2'S HAND");
+    printf(" ----------------------------- %s ----------------------------- \n", isPlayer1 ? "PLAYER 1'S HAND" : "PLAYER 2'S HAND");
     printf("Tile 1 :\tTile 2 :\tTile 3 :\tTile 4 :\tTile 5 :\n");
     for (int y = 0; y < 3; y++) {           //lines last to be able to optimize the space
         for (int i = 0; i < 5; i++) {
@@ -142,7 +143,7 @@ void printHand (boolean isPlayer1, char*** hand) {
         }
         printf("\n");
     }
-    printf(" ----------------------------------------------------------------------- \n");
+    printf(" --------------------------------------------------------------------------- \n");
 }
 
 /**
@@ -154,10 +155,10 @@ void printHand (boolean isPlayer1, char*** hand) {
 void printLevel (int sizeX, int sizeY, char** matrix) {
     int x;
     int y;
-    printf("\n ---------------------------- Current board ---------------------------- \n");
+    printf("\n ------------------------------ Current board ------------------------------ \n");
     printf("\t ");
     for (int i = 1; i <= sizeX; i++){
-        printf("%d%s", i, i > 9 ? " " : "  ");      //to keep it aligned
+        printf("%d%s", i, i > 9 ? "  " : "   ");      //to keep it aligned
     }
     printf("\n");
     for(y=0; y<sizeY; y++) {
@@ -171,7 +172,7 @@ void printLevel (int sizeX, int sizeY, char** matrix) {
         printf("%s] \n",content);
         free(content);
     }
-    printf(" ----------------------------------------------------------------------- \n");
+    printf(" --------------------------------------------------------------------------- \n");
 }
 
 
@@ -187,14 +188,191 @@ void printLevel (int sizeX, int sizeY, char** matrix) {
  */
 void printTurn (boolean isPlayer1Turn, char** level, int sizeXlevel, int sizeYlevel, char*** hand, int scorePlayer1, int scorePlayer2) {
     printLevel(sizeXlevel,sizeYlevel,level);
-    printf("PLAYER %c'S TURN\t\t\t\t\t\t", isPlayer1Turn ? '1' : '2');
     if (scorePlayer2 != -1) {
-        printf("SCORE : %d | %d\n", scorePlayer1, scorePlayer2);
+        printf(" PLAYER 1'S TURN\t\t\t\t\t PLAYER 2'S TURN\t\t\t\t\t       SCORE : %d | %d\n", scorePlayer1, scorePlayer2);
+    }
+
+    if (scorePlayer2 != -1) {
+        printf("       SCORE : %d | %d\n", scorePlayer1, scorePlayer2);
     } else {
-        printf("SCORE : %d\n", scorePlayer1);
+        printf(" SCORE : %d\n", scorePlayer1);
     }
     printHand(isPlayer1Turn,hand);
 }
+
+
+/**
+ * will edit anchorX and anchorY to feature the coordinates of the first letter in the tile
+ * @param tile
+ * @param anchorX
+ * @param anchorY
+ */
+void locateTileAnchor(char** tile, int* anchorX, int* anchorY) {
+    boolean found = FALSE;
+    int y = 0;
+    int x;
+
+    while (!found && y < 3) {
+        x = 0;
+        while (!found && x < 3) {
+            if (tile[x][y] >= 'A' && tile[x][y] <= 'Z') {
+                *anchorX = x;
+                *anchorY = y;
+                found = TRUE;
+            }
+            x++;
+        }
+        y++;
+    }
+    // If no letter was found in the tile array, set anchorX and anchorY to a default value ---> useless
+//    if (!found) {
+//        *anchorX = -1;
+//        *anchorY = -1;
+//    }
+}
+
+/**
+ * will place the tile in the level using the anchor coordinates
+ * @param level the array that will receive the tile
+ * @param levelX
+ * @param levelY size of the level
+ * @param tile the tile to place
+ * @param anchorLevelX x level to place tile anchor in
+ * @param anchorLevelY y level to place tile anchor in
+ * @param anchorTileX internal x level of tile anchor
+ * @param anchorTileY internal y level of tile anchor
+ */
+void placeTile (char*** level, int levelX, int levelY, char** tile, int anchorLevelX, int anchorLevelY, int anchorTileX, int anchorTileY) {
+    int absoluteX = anchorLevelX - anchorTileX;
+    int absoluteY = anchorLevelY - anchorTileY;
+    for (int x = 0; x < 3; x++) {
+        for (int y = 0; y < 3; y++) {
+            if (absoluteX + x >= 0 && absoluteX + x < levelX && absoluteY + y >= 0 && absoluteY + y < levelY && tile[x][y] != '3') {
+                (*level)[absoluteX + x][absoluteY + y] = tile[x][y];
+            }
+        }
+    }
+}
+
+/**
+ * allows a player to play their turn
+ * @param level the current level
+ * @param sizeX
+ * @param sizeY The dimensions of the level
+ * @param hand the current player's hand
+ * @param score the current player's score
+ * @param isFirstTurn used for the rule exception at first turn
+ * @param isHardMode the difficulty of the current game
+ * @param isMultiplayer if the game is multiplayer
+ * @param isPlayer1 if the current player is player 1
+ * @return the player's score at the end of the turn, if they give up the function will return score * -1
+ */
+int playerTurn (char*** level, int sizeX, int sizeY, char*** hand, int score, boolean isFirstTurn, boolean isHardMode, boolean isMultiplayer, boolean isPlayer1) {
+    boolean endTurn = FALSE;
+    boolean proceed;
+    int anchorTileX;
+    int anchorTileY;
+    int placementX;
+    int placementY;
+    int tileIndex;
+    char input[10];
+    do {
+        printf(" 1 - Place a tile\n 2 - Give up\n 3 - Save\n");
+        fflush(stdin);
+        scanf("%s", input);
+        switch (input[0]) {
+            default:
+                fprintf(stderr, "ERROR: Invalid input please use the index of an existing option\n");
+                break;
+            case '1':
+                tileIndex = -1;
+                do{
+                    printf("Which tile do you wish to place (1-5) ?\n");
+                    fflush(stdin);
+                    scanf("%s", input);
+                    if (input[0] > '0' && input[0] < '6') {
+                        tileIndex = input[0] - '1';
+                    } else {
+                        fprintf(stderr, "ERROR: Invalid input please use the index of an existing tile\n");
+                    }
+                } while (tileIndex == -1);
+                locateTileAnchor(hand[tileIndex], &anchorTileX, &anchorTileY);
+
+                do {
+                    proceed = FALSE;
+                    printf("In what column do you want the %c to be in (1-%d) ?\n", hand[tileIndex][anchorTileX][anchorTileY], sizeX);
+                    do{
+                        fflush(stdin);
+                        scanf("%s", input);
+                        placementX = atoi(input) - 1;        //atoi works bc we always want a value above 0 anyway
+                        if (placementX < 0 || placementX > sizeX) {
+                            fprintf(stderr, "ERROR: Invalid input please use an existing index (1-%d)\n", sizeX);
+                        } else {
+                            proceed = TRUE;
+                        }
+                    } while (!proceed);
+                    proceed = FALSE;
+                    printf("In what line do you want the %c to be in (A-%c) ?\n", hand[tileIndex][anchorTileX][anchorTileY], sizeY + 'A' - 1);
+                    do{
+                        fflush(stdin);
+                        scanf("%s", input);
+                        input[0] = toupper(input[0]);
+                        placementY = input[0] - 'A';        //atoi works bc we always want a value above 0 anyway
+                        if (placementY < 0 || placementY > sizeY) {
+                            fprintf(stderr, "ERROR: Invalid input please use an existing index (1-%d)\n", sizeY);
+                        } else {
+                            proceed = TRUE;
+                        }
+                    } while (!proceed);
+                    /*
+                     * if (TEST PLACEMENT) {
+                     * proceed = TRUE;
+                     * } else {
+                     * fprintf(stderr, "ERROR: Invalid placement\n");
+                     * proceed = FALSE;
+                     * }
+                     */
+                    proceed = TRUE; //remove when placement test is built
+                } while (!proceed);
+                placeTile(level, sizeX, sizeY, hand[tileIndex], placementX, placementY, anchorTileX, anchorTileY);
+                score++;
+                initializeTile(&hand[tileIndex], isHardMode, isMultiplayer, isPlayer1);
+                endTurn = TRUE;
+                break;
+            case '2':
+                printf("Are you sure you want to give up ( y / n ) ?\n");
+                do {
+                    proceed =FALSE;
+                    fflush(stdin);
+                    scanf("%s", input);
+                    input[0] = toupper(input[0]);
+                    switch (input[0]) {
+                        default:
+                            fprintf(stderr, "ERROR: Invalid input please use 'y' for yes and 'n' for no\n");
+                            break;
+                        case 'Y':
+                            printf("You gave up.\n");
+                            score = score * -1;
+                            proceed = TRUE;
+                            endTurn = TRUE;
+                            break;
+                        case 'N':
+                            printf("Going back.\n\n");
+                            proceed = TRUE;
+                            break;
+                    }
+                } while (!proceed);
+                break;
+            case '3':
+                fprintf(stderr, "Not implemented yet\n");
+                break;
+        }
+    } while (!endTurn);
+    printf("End of turn\n\n\n");
+    return score;
+}
+
+
 
 /**
  * Free the the content of the specified matrix

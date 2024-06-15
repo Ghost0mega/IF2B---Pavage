@@ -1,6 +1,3 @@
-//
-// Created by Amber GUYENOT-COSIO on 21/05/2024.
-//
 #ifndef STUFF_SINGLEPLAYERGAME_H
 #define STUFF_SINGLEPLAYERGAME_H
 
@@ -16,7 +13,11 @@ typedef struct {
     int score;
 } Singleplayergame;
 
-
+/**
+ * The main loop of the single player game
+ * @param game the game to play
+ */
+void singleplayerGameLoop(Singleplayergame* game);
 
 /**
  * Creates a new single player game

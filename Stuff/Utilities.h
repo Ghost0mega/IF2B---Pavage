@@ -77,6 +77,42 @@ void printLevel (int sizeX, int sizeY, char** matrix);
 void printTurn (boolean isPlayer1Turn, char** level, int sizeXlevel, int sizeYlevel, char*** hand, int scorePlayer1, int scorePlayer2);
 
 /**
+ * will edit anchorX and anchorY to feature the coordinates of the first letter in the tile
+ * @param tile
+ * @param anchorX
+ * @param anchorY
+ */
+void locateTileAnchor(char** tile, int* anchorX, int* anchorY);
+
+/**
+ * will place the tile in the level using the anchor coordinates
+ * @param level the array that will receive the tile
+ * @param levelX
+ * @param levelY size of the level
+ * @param tile the tile to place
+ * @param anchorLevelX x level to place tile anchor in
+ * @param anchorLevelY y level to place tile anchor in
+ * @param anchorTileX internal x level of tile anchor
+ * @param anchorTileY internal y level of tile anchor
+ */
+void placeTile (char*** level, int levelX, int levelY, char** tile, int anchorLevelX, int anchorLevelY, int anchorTileX, int anchorTileY);
+
+/**
+ * allows a player to play their turn
+  * @param level the current level
+ * @param sizeX
+ * @param sizeY The dimensions of the level
+ * @param hand the current player's hand
+ * @param score the current player's score
+ * @param isFirstTurn used for the rule exception at first turn
+ * @param isHardMode the difficulty of the current game
+ * @param isMultiplayer if the game is multiplayer
+ * @param isPlayer1 if the current player is player 1
+ * @return the player's score at the end of the turn, if they give up the function will return score * -1
+ */
+int playerTurn (char*** level, int sizeX, int sizeY, char*** hand, int score, boolean isFirstTurn, boolean isHardMode, boolean isMultiplayer, boolean isPlayer1);
+
+/**
  * Free the the content of the specified matrix
  * @param sizeX - number of columns
  * @param matrix - the matrix to free, it will be modified by this function (by address parameter passing)
