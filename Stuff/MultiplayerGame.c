@@ -11,6 +11,7 @@ void multiplayerGameLoop(MultiplayerGame* game) {
     boolean player1gaveUp = FALSE;
     boolean player2gaveUp = FALSE;
     boolean gameIsOver = FALSE;
+    boolean isFirstTurn = TRUE;
     do {
         if (game->isPlayer1Turn) {
             printTurn(TRUE, game->field, game->sizeX, game->sizeY, game->handPlayer1, game->scorePlayer1, game->scorePlayer2);
@@ -33,6 +34,7 @@ void multiplayerGameLoop(MultiplayerGame* game) {
             gameIsOver = TRUE;
             printf("Both players either gave up or couldn't place any more tiles, the game is over.\n");
         }
+        isFirstTurn = FALSE;
     } while (!gameIsOver);
     if (game->scorePlayer1 > game->scorePlayer2) {
         printf("Player 1 wins with a score of %d over %d\n", game->scorePlayer1, game->scorePlayer2);

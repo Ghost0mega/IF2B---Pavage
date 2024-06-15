@@ -7,9 +7,10 @@
 void singleplayerGameLoop(Singleplayergame* game) {
     boolean gameIsOver = FALSE;
     boolean gaveUp = FALSE;
+    boolean isFirstTurn = TRUE;
     do {
         printTurn(FALSE, game->field, game->sizeX, game->sizeY, game->hand, game->score, -1);
-        game->score = playerTurn(&game->field, game->sizeX, game->sizeY, game->hand, game->score, FALSE, game->isHardDifficulty, FALSE, TRUE);
+        game->score = playerTurn(&game->field, game->sizeX, game->sizeY, game->hand, game->score, isFirstTurn, game->isHardDifficulty, FALSE, TRUE);
         if (game->score < 0) {
             gaveUp = TRUE;
             game->score = game->score * -1;
@@ -18,6 +19,7 @@ void singleplayerGameLoop(Singleplayergame* game) {
             gameIsOver = TRUE;
             printf("You either gave up or couldn't place any more tiles, the game is over.\n");
         }
+        isFirstTurn = FALSE;
     } while (!gameIsOver);
     printf("You finished the game with a score of %d\n", game->score);
 }

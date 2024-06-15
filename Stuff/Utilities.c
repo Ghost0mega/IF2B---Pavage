@@ -232,6 +232,36 @@ void locateTileAnchor(char** tile, int* anchorX, int* anchorY) {
 }
 
 /**
+ * will check if the tile can be placed in the level
+ * @param level the array to check in
+ * @param levelX
+ * @param levelY size of the level
+ * @param tile the tile to place
+ * @param anchorLevelX x level to place tile anchor in
+ * @param anchorLevelY y level to place tile anchor in
+ * @param anchorTileX internal x level of tile anchor
+ * @param anchorTileY internal y level of tile anchor
+ * @return TRUE if the tile can be placed, FALSE if it can't
+ */
+boolean isTilePlaceable (char** level, int levelX, int levelY, char** tile, int anchorLevelX, int anchorLevelY, int anchorTileX, int anchorTileY) {
+    int absoluteX = anchorLevelX - anchorTileX;
+    int absoluteY = anchorLevelY - anchorTileY;
+    for (int x = 0; x < 3; x++) {
+        for (int y = 0; y < 3; y++) {
+            if (absoluteX + x >= 0 && absoluteX + x < levelX && absoluteY + y >= 0 && absoluteY + y < levelY && tile[x][y] != '3') {
+                if (level[absoluteX + x][absoluteY + y] >= 'A' && level[absoluteX + x][absoluteY + y] <= 'Z') {     //if there is a letter in the way
+                    return FALSE;
+                }
+                if (tile[x][y] >= 'A' && tile[x][y] <= 'Z' && level[absoluteX + x][absoluteY + y] == '3') {     //if the tile has a letter and the space is empty
+                    return FALSE;
+                }
+            }
+        }
+    }
+    return TRUE;
+}
+
+/**
  * will place the tile in the level using the anchor coordinates
  * @param level the array that will receive the tile
  * @param levelX
@@ -270,6 +300,7 @@ void placeTile (char*** level, int levelX, int levelY, char** tile, int anchorLe
 int playerTurn (char*** level, int sizeX, int sizeY, char*** hand, int score, boolean isFirstTurn, boolean isHardMode, boolean isMultiplayer, boolean isPlayer1) {
     boolean endTurn = FALSE;
     boolean proceed;
+    boolean cantPlace;
     int anchorTileX;
     int anchorTileY;
     int placementX;
@@ -298,7 +329,6 @@ int playerTurn (char*** level, int sizeX, int sizeY, char*** hand, int score, bo
                 } while (tileIndex == -1);
                 locateTileAnchor(hand[tileIndex], &anchorTileX, &anchorTileY);
 
-                do {
                     proceed = FALSE;
                     printf("In what column do you want the %c to be in (1-%d) ?\n", hand[tileIndex][anchorTileX][anchorTileY], sizeX);
                     do{
@@ -319,25 +349,22 @@ int playerTurn (char*** level, int sizeX, int sizeY, char*** hand, int score, bo
                         input[0] = toupper(input[0]);
                         placementY = input[0] - 'A';        //atoi works bc we always want a value above 0 anyway
                         if (placementY < 0 || placementY > sizeY) {
-                            fprintf(stderr, "ERROR: Invalid input please use an existing index (1-%d)\n", sizeY);
+                            fprintf(stderr, "ERROR: Invalid input please use an existing index (A-%c)\n", hand[tileIndex][anchorTileX][anchorTileY], sizeY + 'A' - 1);
                         } else {
                             proceed = TRUE;
                         }
                     } while (!proceed);
-                    /*
-                     * if (TEST PLACEMENT) {
-                     * proceed = TRUE;
-                     * } else {
-                     * fprintf(stderr, "ERROR: Invalid placement\n");
-                     * proceed = FALSE;
-                     * }
-                     */
-                    proceed = TRUE; //remove when placement test is built
-                } while (!proceed);
-                placeTile(level, sizeX, sizeY, hand[tileIndex], placementX, placementY, anchorTileX, anchorTileY);
-                score++;
-                initializeTile(&hand[tileIndex], isHardMode, isMultiplayer, isPlayer1);
-                endTurn = TRUE;
+                    cantPlace = FALSE;
+                    if (!isTilePlaceable(*level, sizeX, sizeY, hand[tileIndex], placementX, placementY, anchorTileX, anchorTileY) && !isFirstTurn) {
+                        fprintf(stderr, "ERROR: The tile can't be placed there\n");
+                        cantPlace = TRUE;
+                    }
+                if (!cantPlace) {
+                    placeTile(level, sizeX, sizeY, hand[tileIndex], placementX, placementY, anchorTileX, anchorTileY);
+                    score++;
+                    initializeTile(&hand[tileIndex], isHardMode, isMultiplayer, isPlayer1);
+                    endTurn = TRUE;
+                }
                 break;
             case '2':
                 printf("Are you sure you want to give up ( y / n ) ?\n");
