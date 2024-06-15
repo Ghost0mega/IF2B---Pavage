@@ -262,6 +262,30 @@ boolean isTilePlaceable (char** level, int levelX, int levelY, char** tile, int 
 }
 
 /**
+ * will check if the player can play
+ * @param level the array to check in
+ * @param levelX
+ * @param levelY size of the level
+ * @param hand the current player's hand
+ * @return TRUE if the player can play, FALSE if they can't
+ */
+boolean canPlayerPlay (char** level, int levelX, int levelY, char*** hand) {
+    for (int i = 0; i < 5; i++) {      //for each tile in the hand
+        int anchorTileX;
+        int anchorTileY;
+        locateTileAnchor(hand[i], &anchorTileX, &anchorTileY);      //get the anchor coordinates could be optimized by storing them in the game struct ---> called only once during tile initialization
+        for (int x = 0; x < levelX; x++) {
+            for (int y = 0; y < levelY; y++) {
+                if (isTilePlaceable(level, levelX, levelY, hand[i], x, y, anchorTileX, anchorTileY)) {
+                    return TRUE;
+                }
+            }
+        }
+    }
+    return FALSE;
+}
+
+/**
  * will place the tile in the level using the anchor coordinates
  * @param level the array that will receive the tile
  * @param levelX
@@ -308,6 +332,11 @@ int playerTurn (char*** level, int sizeX, int sizeY, char*** hand, int score, bo
     int tileIndex;
     char input[10];
     do {
+        if (!canPlayerPlay(*level, sizeX, sizeY, hand) && !isFirstTurn) {
+            printf("You can't place any more tiles, you gave up.\n");
+            return score * -1;
+            endTurn = TRUE;
+        }
         printf(" 1 - Place a tile\n 2 - Give up\n 3 - Save\n");
         fflush(stdin);
         scanf("%s", input);
