@@ -90,6 +90,15 @@ void initializeTile (char*** tile, boolean isHardDifficulty, boolean isMultiplay
         } while (!placed);
         placed = FALSE;
     }
+
+    // Fill the rest of the tile with '3' characters to remove any potential garbage data (nonsense characters)  / ! \ DOES NOT WORK :(
+    for (int x = 0; x < 3; x++) {
+        for (int y = 0; y < 3; y++) {
+            if (!((*tile)[x][y] >= 'A' && (*tile)[x][y] <= 'Z') && ((*tile)[x][y] < '0' || (*tile)[x][y] > '6')) {
+                (*tile)[x][y] = '3';
+            }
+        }
+    }
 }
 
 char* interpretChar (char n) {
@@ -97,8 +106,12 @@ char* interpretChar (char n) {
     output[1] = '\0';
     switch (n) {
         default:
-            output[0] = ' ';
-            output[1] = n;
+            if (n >= 'A' && n <= 'Z') {
+                output[0] = ' ';
+                output[1] = n;
+            } else {
+                strcpy(output, "  ");
+            }
             break;
         case '0':
             strcpy(output, "-3");
@@ -262,6 +275,32 @@ boolean isTilePlaceable (char** level, int levelX, int levelY, char** tile, int 
 }
 
 /**
+ * will check if the player can play
+ * @param level the array to check in
+ * @param levelX
+ * @param levelY size of the level
+ * @param hand the current player's hand
+ * @param score the current player's score
+ * @return TRUE if the player can play, FALSE if they can't
+ */
+boolean canPlayerPlay (char** level, int levelX, int levelY, char*** hand, int score) {
+    for (int i = 0; i < 5; i++) {      //for each tile in the hand
+        int anchorTileX;
+        int anchorTileY;
+        locateTileAnchor(hand[i], &anchorTileX, &anchorTileY);      //get the anchor coordinates could be optimized by storing them in the game struct ---> called only once during tile initialization
+        for (int x = 0; x < levelX; x++) {
+            for (int y = 0; y < levelY; y++) {
+                if (isTilePlaceable(level, levelX, levelY, hand[i], x, y, anchorTileX, anchorTileY)) {
+                    return TRUE;
+                }
+            }
+        }
+    }
+    return FALSE;
+
+}
+
+/**
  * will place the tile in the level using the anchor coordinates
  * @param level the array that will receive the tile
  * @param levelX
@@ -308,6 +347,10 @@ int playerTurn (char*** level, int sizeX, int sizeY, char*** hand, int score, bo
     int tileIndex;
     char input[10];
     do {
+        if (!canPlayerPlay(*level, sizeX, sizeY, hand, score) && !isFirstTurn) {    //if the player can't place any more tiles
+            printf("You can't place any more tiles, game over.\n");
+            return score * -1;
+        }
         printf(" 1 - Place a tile\n 2 - Give up\n 3 - Save\n");
         fflush(stdin);
         scanf("%s", input);
@@ -367,7 +410,7 @@ int playerTurn (char*** level, int sizeX, int sizeY, char*** hand, int score, bo
                 }
                 break;
             case '2':
-                printf("Are you sure you want to give up ( y / n ) ?\n");
+                printf("Are you sure you want to give up ( y / n ) ?\n");     //unnecessary but is nice to have
                 do {
                     proceed =FALSE;
                     fflush(stdin);

@@ -99,6 +99,17 @@ void locateTileAnchor(char** tile, int* anchorX, int* anchorY);
 boolean isTilePlaceable (char** level, int levelX, int levelY, char** tile, int anchorLevelX, int anchorLevelY, int anchorTileX, int anchorTileY);
 
 /**
+ * will check if the player can play
+ * @param level the array to check in
+ * @param levelX
+ * @param levelY size of the level
+ * @param hand the current player's hand
+ * @param score the current player's score
+ * @return TRUE if the player can play, FALSE if they can't
+ */
+boolean canPlayerPlay (char** level, int levelX, int levelY, char*** hand, int score);
+
+/**
  * will place the tile in the level using the anchor coordinates
  * @param level the array that will receive the tile
  * @param levelX
