@@ -28,6 +28,7 @@ void newMultiplayerGame(int sizeX, int sizeY, boolean hardDifficulty) {
         initializeTile(&game.handPlayer2[i], hardDifficulty, TRUE, FALSE);
     }
     printTurn(TRUE, game.field, game.sizeX, game.sizeY, game.handPlayer1, game.scorePlayer1, game.scorePlayer2);
+    playerTurn(&game.field, game.sizeX, game.sizeY, game.handPlayer1, game.scorePlayer1, TRUE, TRUE);
     printTurn(FALSE, game.field, game.sizeX, game.sizeY, game.handPlayer2, game.scorePlayer1, game.scorePlayer2);
     /*
     printLevel(sizeX,sizeY,game.field);

@@ -87,13 +87,15 @@ void locateTileAnchor(char** tile, int* anchorX, int* anchorY);
 /**
  * will place the tile in the level using the anchor coordinates
  * @param level the array that will receive the tile
+ * @param levelX
+ * @param levelY size of the level
  * @param tile the tile to place
  * @param anchorLevelX x level to place tile anchor in
  * @param anchorLevelY y level to place tile anchor in
  * @param anchorTileX internal x level of tile anchor
  * @param anchorTileY internal y level of tile anchor
  */
-void placeTile (char*** level, char** tile, int anchorLevelX, int anchorLevelY, int anchorTileX, int anchorTileY);
+void placeTile (char*** level, int levelX, int levelY, char** tile, int anchorLevelX, int anchorLevelY, int anchorTileX, int anchorTileY);
 
 /**
  * allows a player to play their turn

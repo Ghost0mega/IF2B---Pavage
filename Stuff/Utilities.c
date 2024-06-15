@@ -207,30 +207,40 @@ void locateTileAnchor(char** tile, int* anchorX, int* anchorY) {
     boolean found = FALSE;
     int x = 0;
     int y = 0;
-    while (!found && x < 3) {
-        while (!found && y < 3) {
+    while (!found && y < 3) {
+        while (!found && x < 3) {
             if (tile[x][y] >= 'A' && tile[x][y] <= 'Z') {
                 *anchorX = x;
                 *anchorY = y;
                 found = TRUE;
             }
-            y++;
+            x++;
         }
-        x++;
+        y++;
     }
 }
 
 /**
  * will place the tile in the level using the anchor coordinates
  * @param level the array that will receive the tile
+ * @param levelX
+ * @param levelY size of the level
  * @param tile the tile to place
  * @param anchorLevelX x level to place tile anchor in
  * @param anchorLevelY y level to place tile anchor in
  * @param anchorTileX internal x level of tile anchor
  * @param anchorTileY internal y level of tile anchor
  */
-void placeTile (char*** level, char** tile, int anchorLevelX, int anchorLevelY, int anchorTileX, int anchorTileY) {
-
+void placeTile (char*** level, int levelX, int levelY, char** tile, int anchorLevelX, int anchorLevelY, int anchorTileX, int anchorTileY) {
+    int absoluteX = anchorLevelX - anchorTileX;
+    int absoluteY = anchorLevelY - anchorTileY;
+    for (int x = 0; x < 3; x++) {
+        for (int y = 0; y < 3; y++) {
+            if (absoluteX + x >= 0 && absoluteX + x < levelX && absoluteY + y >= 0 && absoluteY + y < levelY) {
+                (*level)[absoluteX + x][absoluteY + y] = tile[x][y];
+            }
+        }
+    }
 }
 
 /**
@@ -252,7 +262,7 @@ int playerTurn (char*** level, int sizeX, int sizeY, char*** hand, int score, bo
     int tileIndex;
     char input[10];
     do {
-        printf(" 1 - Place a tile\n 2 - Give up\n3 - Save\n");
+        printf(" 1 - Place a tile\n 2 - Give up\n 3 - Save\n");
         fflush(stdin);
         scanf("%s", input);
         switch (input[0]) {
@@ -287,11 +297,12 @@ int playerTurn (char*** level, int sizeX, int sizeY, char*** hand, int score, bo
                         }
                     } while (!proceed);
                     proceed = FALSE;
-                    printf("In what line do you want the %c to be in (1-%d) ?\n", hand[tileIndex][anchorTileX][anchorTileY], sizeY);
+                    printf("In what line do you want the %c to be in (A-%c) ?\n", hand[tileIndex][anchorTileX][anchorTileY], sizeY + 'A' - 1);
                     do{
                         fflush(stdin);
                         scanf("%s", input);
-                        placementY = atoi(input) - 1;        //atoi works bc we always want a value above 0 anyway
+                        input[0] = toupper(input[0]);
+                        placementY = input[0] - 'A';        //atoi works bc we always want a value above 0 anyway
                         if (placementY < 0 || placementY > sizeY) {
                             fprintf(stderr, "ERROR: Invalid input please use an existing index (1-%d)\n", sizeY);
                         } else {
@@ -308,7 +319,7 @@ int playerTurn (char*** level, int sizeX, int sizeY, char*** hand, int score, bo
                      */
                     proceed = TRUE; //remove when placement test is built
                 } while (!proceed);
-                placeTile(level, hand[tileIndex], placementX, placementY, anchorTileX, anchorTileY);
+                placeTile(level, sizeX, sizeY, hand[tileIndex], placementX, placementY, anchorTileX, anchorTileY);
                 score++;
                 endTurn = TRUE;
                 break;

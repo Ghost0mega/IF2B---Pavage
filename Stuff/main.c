@@ -72,9 +72,10 @@ int main(int argc, char** argv) {
 //tile initialization test
     srand(time(0));
     int iterations = 5;
+    int iterations = 1;
     for (int i = 0; i < iterations; i++) {
         //newSingleplayerGame(15,10,TRUE);
-        newMultiplayerGame(15,10,TRUE);
+        newMultiplayerGame(10,6,TRUE);
         /*
         char **handtest = createAndInitializeMatrix(3, 3);
         initializeTile(&handtest, TRUE, TRUE, FALSE);
