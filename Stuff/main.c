@@ -71,7 +71,6 @@ int main(int argc, char** argv) {
 #if testMode
 //tile initialization test
     srand(time(0));
-    int iterations = 5;
     int iterations = 1;
     for (int i = 0; i < iterations; i++) {
         //newSingleplayerGame(15,10,TRUE);
