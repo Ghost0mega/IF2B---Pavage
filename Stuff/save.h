@@ -14,6 +14,22 @@ void ensureSavesDirectoryExists();
 void generateFilePath(char** path);
 
 /**
+ * save a field to a file
+ * @param fptr the file to save to
+ * @param sizeX
+ * @param sizeY size of the grid
+ * @param field the grid
+ */
+void saveField(FILE* fptr, int sizeX, int sizeY, char** field);
+
+/**
+ * save a hand to a file
+ * @param fptr the file to save to
+ * @param hand the hand to save
+ */
+void saveHand(FILE* fptr, char*** hand);
+
+/**
  * save a singleplayer game to a file in the Saves directory
  * @param isHardDifficulty  true if hard difficulty is enabled
  * @param sizeX
