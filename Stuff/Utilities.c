@@ -248,11 +248,14 @@ boolean isTilePlaceable (char** level, int levelX, int levelY, char** tile, int 
     int absoluteY = anchorLevelY - anchorTileY;
     for (int x = 0; x < 3; x++) {
         for (int y = 0; y < 3; y++) {
-            if (absoluteX + x >= 0 && absoluteX + x < levelX && absoluteY + y >= 0 && absoluteY + y < levelY && tile[x][y] != '3') {
+            if (tile[x][y] >= 'A' && tile[x][y] <= 'Z' && ((absoluteX + x < 0 || absoluteX + x >= levelX) || (absoluteY + y < 0 || absoluteY + y >= levelY))) {   //if trying to place a letter outside the level
+                return FALSE;
+            }
+            if (absoluteX + x >= 0 && absoluteX + x < levelX && absoluteY + y >= 0 && absoluteY + y < levelY && tile[x][y] != '3') {    //if the tile is in the level
                 if (level[absoluteX + x][absoluteY + y] >= 'A' && level[absoluteX + x][absoluteY + y] <= 'Z') {     //if there is a letter in the way
                     return FALSE;
                 }
-                if (tile[x][y] >= 'A' && tile[x][y] <= 'Z' && level[absoluteX + x][absoluteY + y] == '3') {     //if the tile has a letter and the space is empty
+                if (tile[x][y] >= 'A' && tile[x][y] <= 'Z' && level[absoluteX + x][absoluteY + y] == '3') {         //if the tile has a letter and the space is empty
                     return FALSE;
                 }
             }
@@ -332,10 +335,10 @@ int playerTurn (char*** level, int sizeX, int sizeY, char*** hand, int score, bo
     int tileIndex;
     char input[10];
     do {
-        if (!canPlayerPlay(*level, sizeX, sizeY, hand) && !isFirstTurn) {
-            printf("You can't place any more tiles, you gave up.\n");
-            return score * -1;
-        }
+//        if (!canPlayerPlay(*level, sizeX, sizeY, hand) && !isFirstTurn) {
+//            printf("You can't place any more tiles, you gave up.\n");
+//            return score * -1;
+//        }
         printf(" 1 - Place a tile\n 2 - Give up\n 3 - Save\n");
         fflush(stdin);
         scanf("%s", input);
