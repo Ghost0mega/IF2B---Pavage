@@ -9,6 +9,7 @@
 #include <ctype.h>
 #include <time.h>
 #include <string.h>
+#include "save.h"
 
 typedef enum {
     FALSE = 0,
