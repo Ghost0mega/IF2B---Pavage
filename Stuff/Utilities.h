@@ -9,6 +9,9 @@
 #include <ctype.h>
 #include <time.h>
 #include <string.h>
+#include "save.h"
+#include "Singleplayergame.h"
+#include "MultiplayerGame.h"
 
 typedef enum {
     FALSE = 0,

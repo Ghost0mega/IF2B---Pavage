@@ -1,7 +1,5 @@
 #include <stdio.h>
 #include "Utilities.h"
-#include "Singleplayergame.h"
-#include "MultiplayerGame.h"
 #define testMode 0
 
 /**
