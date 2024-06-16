@@ -7,17 +7,21 @@
 void singleplayerGameLoop(Singleplayergame* game) {
     boolean gameIsOver = FALSE;
     boolean gaveUp = FALSE;
+    boolean hasSaved = FALSE;
     boolean isFirstTurn = TRUE;
     do {
         if (!canPlayerPlay(game->field, game->sizeX, game->sizeY, game->hand) && !isFirstTurn) {    //if the player can't play
             gaveUp = TRUE;
         } else {
             printTurn(TRUE, game->field, game->sizeX, game->sizeY, game->hand, game->score, -1);
-            game->score = playerTurn(&game->field, game->sizeX, game->sizeY, game->hand, game->score, isFirstTurn,
-                                     game->isHardDifficulty, FALSE, TRUE);
-            if (game->score < 0) {
+            game->score = playerTurn(&game->field, game->sizeX, game->sizeY, game->hand, game->score, isFirstTurn,game->isHardDifficulty, FALSE, TRUE);
+            if (game->score < 0) {  //if the player has negative points -> they gave up
                 gaveUp = TRUE;
                 game->score = game->score * -1;
+            }
+            if (game->score > 1000) {   //if the player has more than 1000 points(technically achievable with absurd grid sizes but let's ignore that) -> save the game
+                hasSaved = TRUE;
+                game->score = game->score - 1000;
             }
         }
         if (gaveUp) {
@@ -25,8 +29,15 @@ void singleplayerGameLoop(Singleplayergame* game) {
             printf("You either gave up or couldn't place any more tiles, the game is over.\n");
         }
         isFirstTurn = FALSE;
-    } while (!gameIsOver);
-    printf("You finished the game with a score of %d\n", game->score);
+    } while (!gameIsOver && !hasSaved);
+//    printf("You finished the game with a score of %d\n", game->score);
+    if (!gameIsOver) {
+        printf("saving game...\n");
+        saveSingleplayerGame(game->isHardDifficulty, game->sizeX, game->sizeY, game->field, game->hand, game->score);
+        printf("Game saved, returning to main menu\n");
+    } else {
+        printf("Game over, score : %d\n", game->score);
+    }
 }
 
 /**
@@ -56,5 +67,4 @@ void newSingleplayerGame(int sizeX, int sizeY, boolean hardDifficulty) {
     //free everything
     free3dMatrix(5,3,&game.hand);
     freeMatrix(sizeX,&game.field);
-
 }

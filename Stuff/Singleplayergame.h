@@ -2,7 +2,7 @@
 #define STUFF_SINGLEPLAYERGAME_H
 
 #include "Utilities.h"
-
+#include "save.h"
 
 typedef struct {
     boolean isHardDifficulty;

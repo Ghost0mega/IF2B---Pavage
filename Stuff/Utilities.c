@@ -322,7 +322,7 @@ void placeTile (char*** level, int levelX, int levelY, char** tile, int anchorLe
  * @param isHardMode the difficulty of the current game
  * @param isMultiplayer if the game is multiplayer
  * @param isPlayer1 if the current player is player 1
- * @return the player's score at the end of the turn, if they give up the function will return score * -1
+ * @return the player's score at the end of the turn, if they give up the function will return score * -1, if they choose to save the function will return score + 1000
  */
 int playerTurn (char*** level, int sizeX, int sizeY, char*** hand, int score, boolean isFirstTurn, boolean isHardMode, boolean isMultiplayer, boolean isPlayer1) {
     boolean endTurn = FALSE;
@@ -422,7 +422,28 @@ int playerTurn (char*** level, int sizeX, int sizeY, char*** hand, int score, bo
                 } while (!proceed);
                 break;
             case '3':
-                fprintf(stderr, "Not implemented yet\n");
+                printf("Are you sure you want to save ( y / n ) ?\n");
+                do {
+                    proceed =FALSE;
+                    fflush(stdin);
+                    scanf("%s", input);
+                    input[0] = toupper(input[0]);
+                    switch (input[0]) {
+                        default:
+                            fprintf(stderr, "ERROR: Invalid input please use 'y' for yes and 'n' for no\n");
+                            break;
+                        case 'Y':
+                            printf("You saved the game.\n");
+                            score += 1000;
+                            proceed = TRUE;
+                            endTurn = TRUE;
+                            break;
+                        case 'N':
+                            printf("Going back.\n\n");
+                            proceed = TRUE;
+                            break;
+                    }
+                } while (!proceed);
                 break;
         }
     } while (!endTurn);

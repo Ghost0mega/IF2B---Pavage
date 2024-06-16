@@ -11,6 +11,7 @@ void multiplayerGameLoop(MultiplayerGame* game) {
     boolean player1gaveUp = FALSE;
     boolean player2gaveUp = FALSE;
     boolean gameIsOver = FALSE;
+    boolean hasSaved = FALSE;
     boolean isFirstTurn = TRUE;
     do {
         if (game->isPlayer1Turn) {
@@ -28,6 +29,10 @@ void multiplayerGameLoop(MultiplayerGame* game) {
                 }
             }
             game->isPlayer1Turn = player2gaveUp ? TRUE : FALSE;
+            if (game->scorePlayer1 > 1000) {
+                hasSaved = TRUE;
+                game->scorePlayer1 = game->scorePlayer1 - 1000;
+            }
         } else {
             if (!canPlayerPlay(game->field, game->sizeX, game->sizeY, game->handPlayer2) && !isFirstTurn) {
                 printf("Player 2 couldn't place any more tiles, game over.\n");
@@ -43,20 +48,32 @@ void multiplayerGameLoop(MultiplayerGame* game) {
                 }
             }
             game->isPlayer1Turn = player1gaveUp ? FALSE : TRUE;
+            if (game->scorePlayer2 > 1000) {
+                hasSaved = TRUE;
+                game->scorePlayer2 = game->scorePlayer2 - 1000;
+            }
         }
         if (player1gaveUp && player2gaveUp) {
             gameIsOver = TRUE;
             printf("Both players either gave up or couldn't place any more tiles, the game is over.\n");
         }
         isFirstTurn = FALSE;
-    } while (!gameIsOver);
-    if (game->scorePlayer1 > game->scorePlayer2) {
-        printf("Player 1 wins with a score of %d over %d\n", game->scorePlayer1, game->scorePlayer2);
-    } else if (game->scorePlayer1 < game->scorePlayer2) {
-        printf("Player 2 wins with a score of %d over %d\n", game->scorePlayer2, game->scorePlayer1);
+    } while (!gameIsOver && !hasSaved);
+    if (!gameIsOver) {
+        printf("saving game...\n");
+        saveMultiplayerGame(game->isHardDifficulty, game->sizeX, game->sizeY, game->field, game->handPlayer1,
+                            game->handPlayer2, game->scorePlayer1, game->scorePlayer2, game->isPlayer1Turn);
+        printf("Game saved, returning to main menu\n");
     } else {
-        printf("It's a draw!\n");
+        if (game->scorePlayer1 > game->scorePlayer2) {
+            printf("Player 1 wins with a score of %d over %d\n", game->scorePlayer1, game->scorePlayer2);
+        } else if (game->scorePlayer1 < game->scorePlayer2) {
+            printf("Player 2 wins with a score of %d over %d\n", game->scorePlayer2, game->scorePlayer1);
+        } else {
+            printf("It's a draw!\n");
+        }
     }
+
 }
 
 

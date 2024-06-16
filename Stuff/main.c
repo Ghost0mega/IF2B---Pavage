@@ -168,13 +168,13 @@ int main(int argc, char** argv) {
 
         if (menuPos == 11 && !skip) {     //CREATING NEW SINGLE-PLAYER GAME
             newGame(FALSE);
-            printf("Returning to main menu.\n\n");
+//            printf("Returning to main menu.\n\n");
             menuPos = 0;
         }
 
         if (menuPos == 12 && !skip) {    //CREATING NEW MULTI-PLAYER GAME
             newGame(TRUE);
-            printf("Returning to main menu.\n\n");
+//            printf("Returning to main menu.\n\n");
             menuPos = 0;
         }
     } while (!exit);
