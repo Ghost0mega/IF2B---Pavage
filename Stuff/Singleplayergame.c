@@ -68,3 +68,11 @@ void newSingleplayerGame(int sizeX, int sizeY, boolean hardDifficulty) {
     free3dMatrix(5,3,&game.hand);
     freeMatrix(sizeX,&game.field);
 }
+
+/**
+ * Load and play singleplayer game from a file
+ * @param path the path to the save file
+ */
+void loadSingleplayerGame(char* path) {
+
+}

@@ -114,3 +114,12 @@ void newMultiplayerGame(int sizeX, int sizeY, boolean hardDifficulty) {
     free3dMatrix(5,3,&game.handPlayer2);
     freeMatrix(sizeX,&game.field);
 }
+
+/**
+ * Load and play multiplayer game from a file
+ * @param game the game to load into
+ * @param path the path to the save file
+ */
+void loadMultiplayerGame(char* path) {
+
+}

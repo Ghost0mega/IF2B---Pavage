@@ -107,6 +107,15 @@ int main(int argc, char** argv) {
             case 12:
                 printf("CREATING NEW DUO MATCH :\n");
                 break;
+            case 2:
+                printf("LOAD GAME :\n 1 - Single-player\n 2 - Duo match\n 3 - Back\n");
+                break;
+            case 21:
+                printf("LOADING SINGLE-PLAYER MATCH :\n");
+                break;
+            case 22:
+                printf("LOADING DUO MATCH :\n");
+                break;
         }
 
         if (menuPos == 0) {     //MAIN MENU
@@ -124,12 +133,9 @@ int main(int argc, char** argv) {
                         proceed = TRUE;
                         break;
                     case '2':     //LOAD GAME
-                        fprintf(stderr, "Not implemented yet\n");
-                        menuPos = 0;
+                        menuPos = 2;
                         skip = TRUE;
-                        proceed = FALSE;
-                        //menuPos = 2;
-                        //proceed = TRUE;
+                        proceed = TRUE;
                         break;
                     case '3':     //QUIT
                         printf("Goodbye.");
@@ -168,14 +174,55 @@ int main(int argc, char** argv) {
 
         if (menuPos == 11 && !skip) {     //CREATING NEW SINGLE-PLAYER GAME
             newGame(FALSE);
-//            printf("Returning to main menu.\n\n");
+            menuPos = 0;
+        }
+        if (menuPos == 12 && !skip) {    //CREATING NEW MULTI-PLAYER GAME
+            newGame(TRUE);
             menuPos = 0;
         }
 
-        if (menuPos == 12 && !skip) {    //CREATING NEW MULTI-PLAYER GAME
-            newGame(TRUE);
-//            printf("Returning to main menu.\n\n");
+        if (menuPos == 2 && !skip) {     //LOAD GAME
+            proceed = FALSE;
+            do {
+                fflush(stdin);
+                scanf("%s", input);
+                switch (input[0]) {
+                    default:
+                        fprintf(stderr, "ERROR: Invalid input please use the index of an existing option\n");
+                        break;
+                    case '1':     //SINGLEPLAYER
+                        menuPos = 21;
+                        skip = TRUE;
+                        proceed = TRUE;
+                        break;
+                    case '2':     //MULTIPLAYER
+                        menuPos = 22;
+                        skip = TRUE;
+                        proceed = TRUE;
+                        break;
+                    case '3':     //RETURN TO MAIN MENU
+                        printf("Returning to main menu.\n\n");
+                        menuPos = 0;
+                        proceed = TRUE;
+                }
+            } while (!proceed);
+        }
+
+        if (menuPos == 21 && !skip) {    //LOADING SINGLE-PLAYER GAME
+            printf("Loading single-player game...\n");
+            char* path = NULL;
+            generateFilePath(&path);
+            loadSingleplayerGame(path);
             menuPos = 0;
+            free(path);
+        }
+        if (menuPos == 22 && !skip) {    //LOADING MULTI-PLAYER GAME
+            printf("Loading duo match...\n");
+            char* path = NULL;
+            generateFilePath(&path);
+            loadMultiplayerGame(path);
+            menuPos = 0;
+            free(path);
         }
     } while (!exit);
 #endif
