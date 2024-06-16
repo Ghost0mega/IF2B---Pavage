@@ -26,3 +26,16 @@ void generateFilePath(char** path) {
     } while (strlen(name) > 20);
     sprintf(*path, "Saves/%s.txt", name);
 }
+
+/**
+ * save a singleplayer game to a file in the Saves directory
+ * @param isHardDifficulty  true if hard difficulty is enabled
+ * @param sizeX
+ * @param sizeY size of the grid
+ * @param field the grid
+ * @param hand the hand of the player
+ * @param score the score of the player
+ */
+void saveSingleplayerGame(boolean isHardDifficulty, int sizeX, int sizeY, char** field, char*** hand, int score) {
+
+}
