@@ -9,11 +9,16 @@ void singleplayerGameLoop(Singleplayergame* game) {
     boolean gaveUp = FALSE;
     boolean isFirstTurn = TRUE;
     do {
-        printTurn(TRUE, game->field, game->sizeX, game->sizeY, game->hand, game->score, -1);
-        game->score = playerTurn(&game->field, game->sizeX, game->sizeY, game->hand, game->score, isFirstTurn, game->isHardDifficulty, FALSE, TRUE);
-        if (game->score < 0) {
+        if (!canPlayerPlay(game->field, game->sizeX, game->sizeY, game->hand) && !isFirstTurn) {    //if the player can't play
             gaveUp = TRUE;
-            game->score = game->score * -1;
+        } else {
+            printTurn(TRUE, game->field, game->sizeX, game->sizeY, game->hand, game->score, -1);
+            game->score = playerTurn(&game->field, game->sizeX, game->sizeY, game->hand, game->score, isFirstTurn,
+                                     game->isHardDifficulty, FALSE, TRUE);
+            if (game->score < 0) {
+                gaveUp = TRUE;
+                game->score = game->score * -1;
+            }
         }
         if (gaveUp) {
             gameIsOver = TRUE;

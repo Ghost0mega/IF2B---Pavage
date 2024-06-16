@@ -94,7 +94,7 @@ void initializeTile (char*** tile, boolean isHardDifficulty, boolean isMultiplay
 
 char* interpretChar (char n) {
     char *output = (char *) malloc(sizeof(char) * 2);
-    output[1] = '\0';
+    output[2] = '\0';       //for some reason this fixes everything DO NOT REMOVE
     switch (n) {
         default:
             output[0] = ' ';
