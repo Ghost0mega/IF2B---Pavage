@@ -71,9 +71,10 @@ int main(int argc, char** argv) {
 #if testMode
 //tile initialization test
     srand(time(0));
+//    ensureSavesDirectoryExists();
     int iterations = 1;
     for (int i = 0; i < iterations; i++) {
-        newSingleplayerGame(6,3,TRUE);
+//        newSingleplayerGame(6,3,TRUE);
 //        newMultiplayerGame(6,3,TRUE);
 //        char **handtest = createAndInitializeMatrix(3, 3);
 //        initializeTile(&handtest, TRUE, TRUE, FALSE);
@@ -85,7 +86,7 @@ int main(int argc, char** argv) {
     char input[10];
     boolean exit = FALSE;
     boolean proceed = FALSE;
-    boolean skip; //Could be deleted but i dont wanna spend 20 mins switching if statements around
+    boolean skip; //Could be deleted but i don't want to spend 20 mins switching if statements around
     int menuPos = 0;
     do {
         skip = FALSE;

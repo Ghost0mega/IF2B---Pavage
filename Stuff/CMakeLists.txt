@@ -10,4 +10,6 @@ add_executable(Stuff main.c
         Singleplayergame.h
         MultiplayerGame.c
         MultiplayerGame.h
+        save.c
+        save.h
 )
