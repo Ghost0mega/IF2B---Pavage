@@ -71,10 +71,10 @@ int main(int argc, char** argv) {
 #if testMode
 //tile initialization test
     srand(time(0));
-    int iterations = 5;
+    int iterations = 1;
     for (int i = 0; i < iterations; i++) {
-        //newSingleplayerGame(10,6,TRUE);
-        //newMultiplayerGame(10,6,TRUE);
+        //newSingleplayerGame(6,3,TRUE);
+//        newMultiplayerGame(10,6,TRUE);
 //        char **handtest = createAndInitializeMatrix(3, 3);
 //        initializeTile(&handtest, TRUE, TRUE, FALSE);
 //        printLevel(3, 3, handtest);

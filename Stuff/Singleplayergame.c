@@ -9,7 +9,7 @@ void singleplayerGameLoop(Singleplayergame* game) {
     boolean gaveUp = FALSE;
     boolean isFirstTurn = TRUE;
     do {
-        printTurn(FALSE, game->field, game->sizeX, game->sizeY, game->hand, game->score, -1);
+        printTurn(TRUE, game->field, game->sizeX, game->sizeY, game->hand, game->score, -1);
         game->score = playerTurn(&game->field, game->sizeX, game->sizeY, game->hand, game->score, isFirstTurn, game->isHardDifficulty, FALSE, TRUE);
         if (game->score < 0) {
             gaveUp = TRUE;
@@ -38,7 +38,7 @@ void newSingleplayerGame(int sizeX, int sizeY, boolean hardDifficulty) {
             .sizeY = sizeY,
             .isHardDifficulty = hardDifficulty,
             .field = createAndInitializeMatrix(sizeX,sizeY),
-            .hand = (char***) malloc(sizeof(char)*5*3*3),
+            .hand = (char***)malloc(sizeof(char)*5*3*3),
             .score = 0
     };
 

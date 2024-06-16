@@ -189,7 +189,7 @@ void printLevel (int sizeX, int sizeY, char** matrix) {
 void printTurn (boolean isPlayer1Turn, char** level, int sizeXlevel, int sizeYlevel, char*** hand, int scorePlayer1, int scorePlayer2) {
     printLevel(sizeXlevel,sizeYlevel,level);
     if (scorePlayer2 != -1) {
-        printf(" PLAYER 1'S TURN\t\t\t\t\t PLAYER 2'S TURN\t\t\t\t\t       SCORE : %d | %d\n", scorePlayer1, scorePlayer2);
+        printf(" PLAYER %d'S TURN\t\t\t\t\t", isPlayer1Turn ? 1 : 2);
     }
 
     if (scorePlayer2 != -1) {
