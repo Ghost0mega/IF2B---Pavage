@@ -74,7 +74,7 @@ int main(int argc, char** argv) {
     int iterations = 5;
     for (int i = 0; i < iterations; i++) {
         //newSingleplayerGame(10,6,TRUE);
-        //newMultiplayerGame(10,6,TRUE);
+        newMultiplayerGame(10,6,TRUE);
 //        char **handtest = createAndInitializeMatrix(3, 3);
 //        initializeTile(&handtest, TRUE, TRUE, FALSE);
 //        printLevel(3, 3, handtest);

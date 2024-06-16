@@ -73,7 +73,7 @@ void initializeTile (char*** tile, boolean isHardDifficulty, boolean isMultiplay
                 if (isMultiplayer) {
                     (*tile)[x][y] = isPlayer1 ? (char)(65 + i) : (char)(88 + i);
                 } else {
-                    (*tile)[x][y] = (char) (rand() % 26 + 'A');
+                    (*tile)[x][y] = (char) (rand() % 25 + 'A');
                 }
             }
         } while (!placed);
