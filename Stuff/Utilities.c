@@ -73,7 +73,7 @@ void initializeTile (char*** tile, boolean isHardDifficulty, boolean isMultiplay
                 if (isMultiplayer) {
                     (*tile)[x][y] = isPlayer1 ? (char)(65 + i) : (char)(88 + i);
                 } else {
-                    (*tile)[x][y] = (char) (rand() % 26 + 'A');
+                    (*tile)[x][y] = (char) (rand() % 25 + 'A');
                 }
             }
         } while (!placed);
@@ -335,7 +335,6 @@ int playerTurn (char*** level, int sizeX, int sizeY, char*** hand, int score, bo
         if (!canPlayerPlay(*level, sizeX, sizeY, hand) && !isFirstTurn) {
             printf("You can't place any more tiles, you gave up.\n");
             return score * -1;
-            endTurn = TRUE;
         }
         printf(" 1 - Place a tile\n 2 - Give up\n 3 - Save\n");
         fflush(stdin);
