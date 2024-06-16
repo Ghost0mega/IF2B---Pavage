@@ -7,17 +7,24 @@
 void singleplayerGameLoop(Singleplayergame* game) {
     boolean gameIsOver = FALSE;
     boolean gaveUp = FALSE;
+    boolean isFirstTurn = TRUE;
     do {
-        printTurn(FALSE, game->field, game->sizeX, game->sizeY, game->hand, game->score, -1);
-        game->score = playerTurn(&game->field, game->sizeX, game->sizeY, game->hand, game->score, FALSE, game->isHardDifficulty, FALSE, TRUE);
-        if (game->score < 0) {
+        if (!canPlayerPlay(game->field, game->sizeX, game->sizeY, game->hand) && !isFirstTurn) {    //if the player can't play
             gaveUp = TRUE;
-            game->score = game->score * -1;
+        } else {
+            printTurn(TRUE, game->field, game->sizeX, game->sizeY, game->hand, game->score, -1);
+            game->score = playerTurn(&game->field, game->sizeX, game->sizeY, game->hand, game->score, isFirstTurn,
+                                     game->isHardDifficulty, FALSE, TRUE);
+            if (game->score < 0) {
+                gaveUp = TRUE;
+                game->score = game->score * -1;
+            }
         }
         if (gaveUp) {
             gameIsOver = TRUE;
             printf("You either gave up or couldn't place any more tiles, the game is over.\n");
         }
+        isFirstTurn = FALSE;
     } while (!gameIsOver);
     printf("You finished the game with a score of %d\n", game->score);
 }
@@ -36,7 +43,7 @@ void newSingleplayerGame(int sizeX, int sizeY, boolean hardDifficulty) {
             .sizeY = sizeY,
             .isHardDifficulty = hardDifficulty,
             .field = createAndInitializeMatrix(sizeX,sizeY),
-            .hand = (char***) malloc(sizeof(char)*5*3*3),
+            .hand = (char***)malloc(sizeof(char)*5*3*3),
             .score = 0
     };
 

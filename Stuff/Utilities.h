@@ -85,6 +85,30 @@ void printTurn (boolean isPlayer1Turn, char** level, int sizeXlevel, int sizeYle
 void locateTileAnchor(char** tile, int* anchorX, int* anchorY);
 
 /**
+ * will check if the tile can be placed in the level
+ * @param level the array to check in
+ * @param levelX
+ * @param levelY size of the level
+ * @param tile the tile to place
+ * @param anchorLevelX x level to place tile anchor in
+ * @param anchorLevelY y level to place tile anchor in
+ * @param anchorTileX internal x level of tile anchor
+ * @param anchorTileY internal y level of tile anchor
+ * @return TRUE if the tile can be placed, FALSE if it can't
+ */
+boolean isTilePlaceable (char** level, int levelX, int levelY, char** tile, int anchorLevelX, int anchorLevelY, int anchorTileX, int anchorTileY);
+
+/**
+ * will check if the player can play
+ * @param level the array to check in
+ * @param levelX
+ * @param levelY size of the level
+ * @param hand the current player's hand
+ * @return TRUE if the player can play, FALSE if they can't
+ */
+boolean canPlayerPlay (char** level, int levelX, int levelY, char*** hand);
+
+/**
  * will place the tile in the level using the anchor coordinates
  * @param level the array that will receive the tile
  * @param levelX
