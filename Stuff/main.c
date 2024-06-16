@@ -2,7 +2,7 @@
 #include "Utilities.h"
 #include "Singleplayergame.h"
 #include "MultiplayerGame.h"
-#define testMode 1
+#define testMode 0
 
 /**
  * Asks the user what parameters they want for the start of their game and calls the appropriate function
@@ -86,7 +86,7 @@ int main(int argc, char** argv) {
     char input[10];
     boolean exit = FALSE;
     boolean proceed = FALSE;
-    boolean skip; //Could be deleted but i dont wanna spend 20 mins switching if statements around
+    boolean skip; //Could be deleted but i don't want to spend 20 mins switching if statements around
     int menuPos = 0;
     do {
         skip = FALSE;
