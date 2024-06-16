@@ -100,3 +100,36 @@ void saveSingleplayerGame(boolean isHardDifficulty, int sizeX, int sizeY, char**
     fclose(fptr);
     free(path);
 }
+
+/**
+ * save a multiplayer game to a file in the Saves directory
+ * @param isHardDifficulty  true if hard difficulty is enabled
+ * @param sizeX
+ * @param sizeY size of the grid
+ * @param field the grid
+ * @param handPlayer1 the hand of player 1
+ * @param handPlayer2 the hand of player 2
+ * @param scorePlayer1 the score of player 1
+ * @param scorePlayer2 the score of player 2
+ * @param isPlayer1Turn true if it's player 1's turn
+ */
+void saveMultiplayerGame(boolean isHardDifficulty, int sizeX, int sizeY, char** field, char*** handPlayer1, char*** handPlayer2, int scorePlayer1, int scorePlayer2, boolean isPlayer1Turn) {
+    ensureSavesDirectoryExists();
+    char* path;
+    generateFilePath(&path);
+    FILE* fptr = fopen(path, "w");  //open the file in write mode
+    if (fptr == NULL) {
+        fprintf(stderr, "ERROR: Couldn't open the file\n");
+        return;
+    }
+    fprintf(fptr, "Multiplayer\n");
+    fprintf(fptr, "%d\n", isHardDifficulty);
+    fprintf(fptr, "%d\n", scorePlayer1);
+    fprintf(fptr, "%d\n", scorePlayer2);
+    fprintf(fptr, "%d\n", isPlayer1Turn);
+    saveField(fptr, sizeX, sizeY, field);
+    saveHand(fptr, handPlayer1);
+    saveHand(fptr, handPlayer2);
+    fclose(fptr);
+    free(path);
+}

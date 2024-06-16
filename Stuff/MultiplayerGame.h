@@ -1,6 +1,7 @@
 #ifndef STUFF_MULTIPLAYERGAME_H
 #define STUFF_MULTIPLAYERGAME_H
 #include "Utilities.h"
+#include "save.h"
 
 typedef struct MultiplayerGame {
     boolean isHardDifficulty;

@@ -40,4 +40,18 @@ void saveHand(FILE* fptr, char*** hand);
  */
 void saveSingleplayerGame(boolean isHardDifficulty, int sizeX, int sizeY, char** field, char*** hand, int score);
 
+/**
+ * save a multiplayer game to a file in the Saves directory
+ * @param isHardDifficulty  true if hard difficulty is enabled
+ * @param sizeX
+ * @param sizeY size of the grid
+ * @param field the grid
+ * @param handPlayer1 the hand of player 1
+ * @param handPlayer2 the hand of player 2
+ * @param scorePlayer1 the score of player 1
+ * @param scorePlayer2 the score of player 2
+ * @param isPlayer1Turn true if it's player 1's turn
+ */
+void saveMultiplayerGame(boolean isHardDifficulty, int sizeX, int sizeY, char** field, char*** handPlayer1, char*** handPlayer2, int scorePlayer1, int scorePlayer2, boolean isPlayer1Turn);
+
 #endif //STUFF_SAVE_H
