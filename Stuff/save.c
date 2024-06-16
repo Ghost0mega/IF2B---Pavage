@@ -67,7 +67,6 @@ void saveHand(FILE* fptr, char*** hand) {
             for (int k = 0; k < 3; k++) {
                 fprintf(fptr, "%c", hand[i][j][k]);
             }
-            fprintf(fptr, "\n");
         }
         fprintf(fptr, "\n");
     }
