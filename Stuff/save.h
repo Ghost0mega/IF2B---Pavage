@@ -30,6 +30,22 @@ void saveField(FILE* fptr, int sizeX, int sizeY, char** field);
 void saveHand(FILE* fptr, char*** hand);
 
 /**
+ * load a field from a file
+ * @param fptr the file to load from
+ * @param field the field to load into
+ * @param sizeX
+ * @param sizeY size of the grid
+ */
+void loadField(FILE* fptr, int sizeX, int sizeY, char*** field);
+
+/**
+ * load a hand from a file
+ * @param fptr the file to load from
+ * @param hand the hand to load into
+ */
+void loadHand(FILE* fptr, char**** hand);
+
+/**
  * save a singleplayer game to a file in the Saves directory
  * @param isHardDifficulty  true if hard difficulty is enabled
  * @param sizeX

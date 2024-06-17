@@ -26,4 +26,10 @@ void singleplayerGameLoop(Singleplayergame* game);
  * @param hardDifficulty is hard difficulty enabled
  */
 void newSingleplayerGame(int sizeX, int sizeY, boolean hardDifficulty);
+
+/**
+ * Load and play singleplayer game from a file
+ * @param path the path to the save file
+ */
+void loadSingleplayerGame(char* path);
 #endif //STUFF_SINGLEPLAYERGAME_H

@@ -52,7 +52,6 @@ void saveField(FILE* fptr, int sizeX, int sizeY, char** field) {
         for (int j = 0; j < sizeY; j++) {
             fprintf(fptr, "%c", field[i][j]);
         }
-        fprintf(fptr, "\n");
     }
     fprintf(fptr, "\n");
 }
@@ -68,9 +67,46 @@ void saveHand(FILE* fptr, char*** hand) {
             for (int k = 0; k < 3; k++) {
                 fprintf(fptr, "%c", hand[i][j][k]);
             }
-            fprintf(fptr, "\n");
         }
         fprintf(fptr, "\n");
+    }
+}
+
+/**
+ * load a field from a file
+ * @param fptr the file to load from
+ * @param field the field to load into
+ * @param sizeX
+ * @param sizeY size of the grid
+ */
+void loadField(FILE* fptr, int sizeX, int sizeY, char*** field) {
+        char temp;
+        for (int i = 0; i < sizeX; i++) {
+            for (int j = 0; j < sizeY; j++) {
+                printf(" - Reading character for field[%d][%d]\n", i, j);
+                fscanf(fptr, "%c", field[i][j]);
+                printf(" - Read character: %c\n", (*field)[i][j]);
+            }
+//            fscanf(fptr, "%c", &temp);  // read and discard the newline character
+        }
+}
+
+/**
+ * load a hand from a file
+ * @param fptr the file to load from
+ * @param hand the hand to load into
+ */
+void loadHand(FILE* fptr, char**** hand) {
+    char temp;
+    for (int i = 0; i < 5; i++) {
+        for (int j = 0; j < 3; j++) {
+            for (int k = 0; k < 3; k++) {
+                printf(" - Reading character for hand[%d][%d][%d]\n", i, j, k);
+                fscanf(fptr, "%c", hand[i][j][k]);
+                printf(" - Read character: %c\n", (*hand)[i][j][k]);
+            }
+        }
+        fscanf(fptr, "%c", &temp);  // read and discard the newline character
     }
 }
 

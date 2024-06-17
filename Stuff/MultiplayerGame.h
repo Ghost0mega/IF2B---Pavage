@@ -28,4 +28,12 @@ void multiplayerGameLoop(MultiplayerGame* game);
  * @param hardDifficulty is hard difficulty enabled
  */
 void newMultiplayerGame(int sizeX, int sizeY, boolean hardDifficulty);
+
+
+/**
+ * Load and play multiplayer game from a file
+ * @param game the game to load into
+ * @param path the path to the save file
+ */
+void loadMultiplayerGame(char* path);
 #endif //STUFF_MULTIPLAYERGAME_H

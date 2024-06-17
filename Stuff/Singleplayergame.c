@@ -47,7 +47,7 @@ void singleplayerGameLoop(Singleplayergame* game) {
  * @param hardDifficulty is hard difficulty enabled
  */
 void newSingleplayerGame(int sizeX, int sizeY, boolean hardDifficulty) {
-    printf("Singleplayer | Rows : %d | Columns : %d | HardDifficulty : %s\n", sizeY, sizeX, hardDifficulty ? "true" : "false");
+//    printf("Singleplayer | Rows : %d | Columns : %d | HardDifficulty : %s\n", sizeY, sizeX, hardDifficulty ? "true" : "false");
 
     Singleplayergame game = {
             .sizeX = sizeX,
@@ -62,6 +62,66 @@ void newSingleplayerGame(int sizeX, int sizeY, boolean hardDifficulty) {
         game.hand[i] = createAndInitializeMatrix(3,3);
         initializeTile(&game.hand[i],hardDifficulty,FALSE,TRUE);
     }
+    singleplayerGameLoop(&game);
+
+    //free everything
+    free3dMatrix(5,3,&game.hand);
+    freeMatrix(sizeX,&game.field);
+}
+
+/**
+ * Load and play singleplayer game from a file
+ * @param path the path to the save file
+ */
+void loadSingleplayerGame(char* path) {
+    printf("Attempting to load singleplayer game from %s\n", path);
+    FILE* fptr = fopen(path, "r");
+    if (fptr == NULL) {
+        fprintf(stderr, "ERROR: Couldn't open the file\n");
+        return;
+    }
+    printf(" - File opened\n");
+    char* type = (char*)malloc(sizeof(char)*20);
+    fscanf(fptr, "%s\n", type);
+    if (strcmp(type, "Singleplayer") != 0) {
+        fprintf(stderr, "ERROR: The file is not a singleplayer save file\n");
+        free(type);
+        fclose(fptr);
+        return;
+    }
+    printf(" - File is valid\n");
+    free(type);
+
+    boolean isHardDifficulty;
+    fscanf(fptr, "%d\n", &isHardDifficulty);
+    int score;
+    fscanf(fptr, "%d\n", &score);
+    int sizeX;
+    fscanf(fptr, "%d\n", &sizeX);
+    int sizeY;
+    fscanf(fptr, "%d\n", &sizeY);
+    printf(" - Basic file data loaded\n");
+
+    Singleplayergame game = {
+            .sizeX = sizeX,
+            .sizeY = sizeY,
+            .isHardDifficulty = isHardDifficulty,
+            .field = createAndInitializeMatrix(sizeX,sizeY),
+            .hand = (char***)malloc(sizeof(char)*5*3*3),
+            .score = 0
+    };
+    printf(" - Game structure initialized\n");
+    loadField(fptr, sizeX, sizeY, &game.field);
+    printf(" - Field loaded\n");
+
+    for (int i = 0; i < 5; i++) {
+        game.hand[i] = createAndInitializeMatrix(3, 3);
+    }
+    printf(" - Hand initialized\n");
+    loadHand(fptr, &game.hand);
+    printf(" - Hand loaded\n");
+    fclose(fptr);
+    printf("Game loaded, starting game...\n");
     singleplayerGameLoop(&game);
 
     //free everything
