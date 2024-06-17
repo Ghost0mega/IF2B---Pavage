@@ -121,5 +121,64 @@ void newMultiplayerGame(int sizeX, int sizeY, boolean hardDifficulty) {
  * @param path the path to the save file
  */
 void loadMultiplayerGame(char* path) {
+    printf("Attempting to load multiplayer game from %s\n", path);
+    FILE* fptr = fopen(path, "r");
+    if (fptr == NULL) {
+        fprintf(stderr, "ERROR: Couldn't open the file\n");
+        return;
+    }
+    printf(" - File opened\n");
+    char* type = (char*)malloc(sizeof(char)*20);
+    fscanf(fptr, "%s\n", type);
+    if (strcmp(type, "Multiplayer") != 0) {
+        fprintf(stderr, "ERROR: The file is not a multiplayer save file\n");
+        free(type);
+        fclose(fptr);
+        return;
+    }
+    printf(" - File is valid\n");
+    free(type);
 
+    boolean isHardDifficulty;
+    fscanf(fptr, "%d\n", &isHardDifficulty);
+    int scorePlayer1;
+    fscanf(fptr, "%d\n", &scorePlayer1);
+    int scorePlayer2;
+    fscanf(fptr, "%d\n", &scorePlayer2);
+    int sizeX;
+    fscanf(fptr, "%d\n", &sizeX);
+    int sizeY;
+    fscanf(fptr, "%d\n", &sizeY);
+    printf(" - Basic file data loaded\n");
+
+    MultiplayerGame game = {
+            .sizeX = sizeX,
+            .sizeY = sizeY,
+            .isHardDifficulty = isHardDifficulty,
+            .field = createAndInitializeMatrix(sizeX,sizeY),
+            .handPlayer1 = (char***)malloc(sizeof(char)*5*3*3),
+            .handPlayer2 = (char***)malloc(sizeof(char)*5*3*3),
+            .scorePlayer1 = scorePlayer1,
+            .scorePlayer2 = scorePlayer2
+    };
+    printf(" - Game structure initialized\n");
+    loadField(fptr, sizeX, sizeY, &game.field);
+    printf(" - Field loaded\n");
+
+    for (int i = 0; i < 5; i++) {
+    game.handPlayer1[i] = createAndInitializeMatrix(3,3);
+    game.handPlayer2[i] = createAndInitializeMatrix(3,3);
+    }
+    printf(" - Hands initialized\n");
+    loadHand(fptr, &game.handPlayer1);
+    loadHand(fptr, &game.handPlayer2);
+    printf(" - Hands loaded\n");
+    fclose(fptr);
+    printf("Game loaded, starting game...\n");
+    multiplayerGameLoop(&game);
+
+    //free everything
+    free3dMatrix(5,3,&game.handPlayer1);
+    free3dMatrix(5,3,&game.handPlayer2);
+    freeMatrix(sizeX,&game.field);
 }

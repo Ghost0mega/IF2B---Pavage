@@ -110,7 +110,7 @@ void loadSingleplayerGame(char* path) {
             .hand = (char***)malloc(sizeof(char)*5*3*3),
             .score = 0
     };
-    printf(" - Game initialized\n");
+    printf(" - Game structure initialized\n");
     loadField(fptr, sizeX, sizeY, &game.field);
     printf(" - Field loaded\n");
 

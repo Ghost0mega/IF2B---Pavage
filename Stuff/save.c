@@ -85,7 +85,7 @@ void loadField(FILE* fptr, int sizeX, int sizeY, char*** field) {
             for (int j = 0; j < sizeY; j++) {
                 printf(" - Reading character for field[%d][%d]\n", i, j);
                 fscanf(fptr, "%c", field[i][j]);
-                printf(" - Read character: %c\n", *field[i][j]);
+                printf(" - Read character: %c\n", (*field)[i][j]);
             }
 //            fscanf(fptr, "%c", &temp);  // read and discard the newline character
         }
@@ -101,10 +101,12 @@ void loadHand(FILE* fptr, char**** hand) {
     for (int i = 0; i < 5; i++) {
         for (int j = 0; j < 3; j++) {
             for (int k = 0; k < 3; k++) {
+                printf(" - Reading character for hand[%d][%d][%d]\n", i, j, k);
                 fscanf(fptr, "%c", hand[i][j][k]);
+                printf(" - Read character: %c\n", (*hand)[i][j][k]);
             }
-            fscanf(fptr, "%c", &temp);  // read and discard the newline character
         }
+        fscanf(fptr, "%c", &temp);  // read and discard the newline character
     }
 }
 

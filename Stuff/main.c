@@ -83,10 +83,11 @@ int main(int argc, char** argv) {
     }
 
 #else
+    srand(time(0));
     char input[10];
     boolean exit = FALSE;
     boolean proceed = FALSE;
-    boolean skip; //Could be deleted but i don't want to spend 20 mins switching if statements around
+    boolean skip; //Could be deleted, but I don't want to spend 20 mins switching if statements around
     int menuPos = 0;
     do {
         skip = FALSE;
